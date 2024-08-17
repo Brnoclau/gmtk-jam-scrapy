@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90022e7c72a44768ae71e7b03cb55a79, type: 3}
+  m_Name: Small Wheel PlayerComponentConfig
+  m_EditorClassIdentifier: 
+  key: small-wheel
+  type: 1
+  prefab: {fileID: 3217288627225489049, guid: 47acf0302b877d3428cfb51516bbd3fc, type: 3}
+  uiImage: {fileID: -7869345368400156953, guid: 11a5fe0dc4efa254883659245fabe2bb, type: 3}
+  uiName: Small Wheel
