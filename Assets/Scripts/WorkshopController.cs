@@ -104,9 +104,14 @@ namespace Scrapy
                 _active = value;
                 if (_active)
                 {
+                    UpdateAvailableComponents();
+                    UpdatePlacementReact();
+                
                     placementAreaSprite.gameObject.SetActive(true);
                     placementAreaSprite.transform.position = PlacementAreaCenter;
                     placementAreaSprite.size = PlacementAreaSize;
+                    
+                    Mode = WorkshopMode.Selection;
                 }
                 else
                 {
@@ -255,34 +260,34 @@ namespace Scrapy
             }
         }
 
-        public void SetAvailableComponents(SaveFile saveFile)
-        {
-            _availableComponents.Clear();
-            foreach (var unlockedComponent in saveFile.unlockedComponents)
-            {
-                var config = GlobalConfig.Instance.AllComponents.FirstOrDefault(x => x.key == unlockedComponent.key);
-                if (config == null)
-                {
-                    Debug.LogError($"Can't find unlocked component from save file: {unlockedComponent.key}");
-                }
-
-                var attachedComponents = saveFile.player.attachedComponents.Where(x => x.key == unlockedComponent.key)
-                    .ToList();
-                if (attachedComponents.Count > unlockedComponent.maxCount)
-                {
-                    Debug.LogError($"Player has more attached components than max. Resetting attached components");
-                    saveFile.player.attachedComponents.Clear();
-                    attachedComponents.Clear();
-                }
-
-                _availableComponents.Add(new AvailableComponent
-                {
-                    componentConfig = config,
-                    count = unlockedComponent.maxCount - attachedComponents.Count,
-                    maxCount = unlockedComponent.maxCount
-                });
-            }
-        }
+        // public void SetAvailableComponents(SaveFile saveFile)
+        // {
+        //     _availableComponents.Clear();
+        //     foreach (var unlockedComponent in saveFile.unlockedComponents)
+        //     {
+        //         var config = GlobalConfig.Instance.AllComponents.FirstOrDefault(x => x.key == unlockedComponent.key);
+        //         if (config == null)
+        //         {
+        //             Debug.LogError($"Can't find unlocked component from save file: {unlockedComponent.key}");
+        //         }
+        //
+        //         var attachedComponents = saveFile.player.attachedComponents.Where(x => x.key == unlockedComponent.key)
+        //             .ToList();
+        //         if (attachedComponents.Count > unlockedComponent.maxCount)
+        //         {
+        //             Debug.LogError($"Player has more attached components than max. Resetting attached components");
+        //             saveFile.player.attachedComponents.Clear();
+        //             attachedComponents.Clear();
+        //         }
+        //
+        //         _availableComponents.Add(new AvailableComponent
+        //         {
+        //             componentConfig = config,
+        //             count = unlockedComponent.maxCount - attachedComponents.Count,
+        //             maxCount = unlockedComponent.maxCount
+        //         });
+        //     }
+        // }
 
         private void UpdateAvailableComponents()
         {
@@ -421,8 +426,6 @@ namespace Scrapy
             if (newState == GameState.Workshop)
             {
                 Active = true;
-                Mode = WorkshopMode.Selection;
-                UpdatePlacementReact();
             }
         }
 

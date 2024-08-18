@@ -4,7 +4,10 @@ namespace Scrapy
 {
     public class WorkshopArea : MonoBehaviour
     {
+        [SerializeField] private string key;
         [SerializeField] private Transform playerHoldPoint;
+        
+        public string Key => key;
 
         public Vector3 PlayerHoldPosition => playerHoldPoint.position;
     

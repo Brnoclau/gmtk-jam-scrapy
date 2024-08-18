@@ -5,11 +5,12 @@ using Scrapy.Player;
 namespace Scrapy
 {
     [Serializable]
-    public struct SaveFile
+    public class SaveFile
     {
         public PlayerSaveData player;
         public List<string> reachedCheckpoints;
         public List<UnlockedComponentData> unlockedComponents;
+        public string lastUsedWorkshopKey = null;
 
         public static SaveFile Default()
         {
@@ -18,13 +19,15 @@ namespace Scrapy
                 player = new PlayerSaveData()
                 {
                     attachedComponents = new List<AttachedComponentSave>()
-                }
+                },
+                reachedCheckpoints = new(),
+                unlockedComponents = new()
             };
         }
     }
 
     [Serializable]
-    public struct PlayerSaveData
+    public class PlayerSaveData
     {
         public List<AttachedComponentSave> attachedComponents;
     }

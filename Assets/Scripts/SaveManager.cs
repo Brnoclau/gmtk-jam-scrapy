@@ -9,7 +9,7 @@ namespace Scrapy
     {
         public static SaveManager Instance { get; private set; }
 
-        public SaveFile CurrentSave { get; private set; }
+        public SaveFile CurrentSave { get; set; }
 
         void Awake()
         {
@@ -33,19 +33,19 @@ namespace Scrapy
                 return;
             }
 
-            var saveFile = new SaveFile();
-            saveFile.player = new PlayerSaveData();
-            saveFile.player.attachedComponents = gameManager.Player.GetAttachedComponentsSave();
-            saveFile.unlockedComponents = gameManager.WorkshopController.AvailableComponents.Select(x =>
-            {
-                return new UnlockedComponentData()
-                {
-                    key = x.componentConfig.key,
-                    maxCount = x.maxCount
-                };
-            }).ToList();
+            CurrentSave.player = new PlayerSaveData();
+            CurrentSave.player.attachedComponents = gameManager.Player.GetAttachedComponentsSave();
+            // Workshop gets what components are unlocked, not the opposite
+            // CurrentSave.unlockedComponents = gameManager.WorkshopController.AvailableComponents.Select(x =>
+            // {
+            //     return new UnlockedComponentData()
+            //     {
+            //         key = x.componentConfig.key,
+            //         maxCount = x.maxCount
+            //     };
+            // }).ToList();
 
-            var json = JsonUtility.ToJson(saveFile, true);
+            var json = JsonUtility.ToJson(CurrentSave, true);
             Debug.Log("Save file json: \n" + json);
             var savePath = GetSavePath();
             Debug.Log("Save path: " + savePath);
@@ -60,7 +60,6 @@ namespace Scrapy
             }
 
             Debug.Log("Successfully saved the game");
-            CurrentSave = saveFile;
         }
 
         public SaveFile LoadGame()
@@ -69,7 +68,8 @@ namespace Scrapy
             if (!File.Exists(savePath))
             {
                 Debug.Log("No save file, using default save");
-                return SaveFile.Default();
+                CurrentSave = SaveFile.Default();
+                return CurrentSave;
             }
 
             var saveJson = File.ReadAllText(savePath);

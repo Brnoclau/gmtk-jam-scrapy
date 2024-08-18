@@ -34,7 +34,7 @@ namespace Scrapy
             toWorkshopButton.onClick.AddListener(() => GameManager.Instance.State = GameState.Workshop);
 
             resumeButton.onClick.AddListener(() => GameManager.Instance.IsGamePaused = false);
-            saveButton.onClick.AddListener(() => GameManager.Instance.SaveGame());
+            saveButton.onClick.AddListener(() => SaveManager.Instance.SaveGame());
             exitGameButton.onClick.AddListener(() => GameManager.Instance.ExitGame());
         }
 
