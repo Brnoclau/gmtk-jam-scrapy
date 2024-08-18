@@ -118,7 +118,7 @@ namespace Scrapy
         {
             var save = SaveManager.Instance.LoadGame();
             QuestManager.Instance.LoadFromSave();
-            if (save.lastUsedWorkshopKey != null)
+            if (save.lastUsedWorkshopKey != null && save.lastUsedWorkshopKey.Length > 0)
             {
                 var workshop = workshopAreas.FirstOrDefault(x => x.Key == save.lastUsedWorkshopKey);
                 if (workshop == null)

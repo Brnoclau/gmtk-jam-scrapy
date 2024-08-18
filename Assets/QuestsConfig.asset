@@ -24,3 +24,9 @@ MonoBehaviour:
     name: First workshop
     description: Enter the workshop
     playCompleteQuestAnimation: 1
+  - checkpointKey: quest-toilet-paper
+    activeWhenCheckpointsComplete:
+    - collect-first-components
+    name: Toilet Paper
+    description: Find and collect the toilet paper
+    playCompleteQuestAnimation: 1

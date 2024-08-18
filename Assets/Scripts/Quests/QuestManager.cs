@@ -41,6 +41,11 @@ namespace Scrapy
 
         public void CompleteCheckpoint(string checkpoint)
         {
+            if (string.IsNullOrWhiteSpace(checkpoint))
+            {
+                Debug.LogWarning("Collected empty checkpoint");
+                return;
+            }
             var save = SaveManager.Instance.CurrentSave;
             if (save.reachedCheckpoints.Contains(checkpoint)) return;
 
