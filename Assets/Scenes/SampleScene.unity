@@ -9976,7 +9976,7 @@ Transform:
   m_GameObject: {fileID: 990081233}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 16.99, y: -2.93, z: -0.019595258}
+  m_LocalPosition: {x: 17.092, y: -3.038, z: -0.019595258}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12136,11 +12136,11 @@ MonoBehaviour:
   m_Content: {fileID: 747609541}
   m_Horizontal: 0
   m_Vertical: 1
-  m_MovementType: 1
+  m_MovementType: 2
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 50
   m_Viewport: {fileID: 252594377}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 349899757}
