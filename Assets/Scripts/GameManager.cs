@@ -93,8 +93,6 @@ namespace Scrapy
             }
 
             Instance = this;
-
-            uiController.ToWorkshopTriggered += () => SetState(GameState.Workshop);
         }
 
         private void Start()
@@ -119,6 +117,7 @@ namespace Scrapy
         public void LoadGame()
         {
             var save = SaveManager.Instance.LoadGame();
+            QuestManager.Instance.LoadFromSave();
             if (save.lastUsedWorkshopKey != null)
             {
                 var workshop = workshopAreas.FirstOrDefault(x => x.Key == save.lastUsedWorkshopKey);
@@ -208,6 +207,11 @@ namespace Scrapy
             {
                 // rb.simulated = false;
                 rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            }
+
+            foreach (var playerAttachedComponent in _player.AttachedComponents)
+            {
+                playerAttachedComponent.component.enabled = false;   
             }
         }
     }

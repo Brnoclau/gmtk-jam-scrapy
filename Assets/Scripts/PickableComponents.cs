@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Scrapy
 {
-    public class PickableComponents : PickableItem
+    public class PickableComponents : PickableCheckpoint
     {
         [SerializeField] private List<ComponentEntry> components;
 

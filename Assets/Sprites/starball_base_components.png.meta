@@ -246,7 +246,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: starball_base_components_3
+      name: starball_base_junk_oval
       rect:
         serializedVersion: 2
         x: 381
@@ -268,7 +268,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: starball_base_components_4
+      name: starball_base_box_wires
       rect:
         serializedVersion: 2
         x: 910
@@ -400,7 +400,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: starball_base_components_10
+      name: starball_base_ducttape_1
       rect:
         serializedVersion: 2
         x: 66
@@ -422,7 +422,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: starball_base_components_11
+      name: starball_base_ducttape_2
       rect:
         serializedVersion: 2
         x: 185
@@ -466,7 +466,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: starball_base_components_13
+      name: starball_base_box_junk
       rect:
         serializedVersion: 2
         x: 931
@@ -488,7 +488,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: starball_base_components_14
+      name: starball_base_extinguisher
       rect:
         serializedVersion: 2
         x: 24
@@ -510,7 +510,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: starball_base_components_15
+      name: starball_base_smoke_1
       rect:
         serializedVersion: 2
         x: 251
@@ -532,7 +532,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: starball_base_components_16
+      name: starball_base_smoke_2
       rect:
         serializedVersion: 2
         x: 467
@@ -554,7 +554,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: starball_base_components_17
+      name: starball_base_smoke_3
       rect:
         serializedVersion: 2
         x: 643
@@ -576,7 +576,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: starball_base_components_18
+      name: starball_base_smoke_4
       rect:
         serializedVersion: 2
         x: 797
@@ -611,8 +611,18 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
+      starball_base_box_junk: 1288531495432639844
+      starball_base_box_wires: -102394445964979260
       starball_base_components_wheel_big: 4981726781132344008
       starball_base_components_wheel_small: -7869345368400156953
+      starball_base_ducttape_1: -8597171595402558625
+      starball_base_ducttape_2: -5486575712674879091
+      starball_base_extinguisher: 848694022813206536
+      starball_base_junk_oval: -7870120831946766111
+      starball_base_smoke_1: -505149427915541577
+      starball_base_smoke_2: -4398059009539974645
+      starball_base_smoke_3: 5913896826373858489
+      starball_base_smoke_4: -1873888370375525523
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

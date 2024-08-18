@@ -18,8 +18,6 @@ namespace Scrapy
         [SerializeField] private Button saveButton;
         [SerializeField] private Button exitGameButton;
 
-        public event Action ToWorkshopTriggered;
-
         private void Awake()
         {
             GameManager.Instance.StateChanged += OnStateChanged;
@@ -36,10 +34,6 @@ namespace Scrapy
             resumeButton.onClick.AddListener(() => GameManager.Instance.IsGamePaused = false);
             saveButton.onClick.AddListener(() => SaveManager.Instance.SaveGame());
             exitGameButton.onClick.AddListener(() => GameManager.Instance.ExitGame());
-        }
-
-        private void Start()
-        {
         }
 
         private void Update()

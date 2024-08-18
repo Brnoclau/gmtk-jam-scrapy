@@ -21,6 +21,10 @@ namespace Scrapy
         [SerializeField] private Vector2 placementAreaCenter;
         [SerializeField] private Vector2 placementAreaSize;
 
+        [Header("Rotate controls")] [SerializeField]
+        private float rotateMaxSpeed = 1;
+        [SerializeField] private float rotateFullSpeedTime = 1;
+
         private List<AvailableComponent> _availableComponents = new();
 
         public IReadOnlyList<AvailableComponent> AvailableComponents => _availableComponents;
@@ -60,8 +64,8 @@ namespace Scrapy
 
         private Vector2 PlacementAreaCenter;
 
-        private Vector2 PlacementAreaSize; 
-        private Rect PlacementAreaRect; 
+        private Vector2 PlacementAreaSize;
+        private Rect PlacementAreaRect;
 
         public bool CanPlaceComponent { get; private set; }
         public BodyPlayerComponent AttachmentParent { get; private set; }
@@ -106,11 +110,11 @@ namespace Scrapy
                 {
                     UpdateAvailableComponents();
                     UpdatePlacementReact();
-                
+
                     placementAreaSprite.gameObject.SetActive(true);
                     placementAreaSprite.transform.position = PlacementAreaCenter;
                     placementAreaSprite.size = PlacementAreaSize;
-                    
+
                     Mode = WorkshopMode.Selection;
                 }
                 else
@@ -124,6 +128,8 @@ namespace Scrapy
         }
 
         private bool _active;
+        private float _previousRotatingDirection;
+        private float _startedRotatingAt;
         private Collider2D[] _raycastResults = new Collider2D[10];
 
         private void Awake()
@@ -227,8 +233,11 @@ namespace Scrapy
             var gamePos = cam.ScreenToWorldPoint(mousePos);
             gamePos.z = 0;
             AddingComponentObject.transform.position = gamePos;
+            
+            UpdateAddingRotation();
 
             CheckIfCanPlaceComponent();
+            UpdateAddingObjectColor();
 
             if (Input.GetMouseButtonUp(0))
             {
@@ -240,6 +249,22 @@ namespace Scrapy
 
                 PlaceComponent();
             }
+        }
+
+        private void UpdateAddingRotation()
+        {
+            float rotationDirection = (Input.GetKey(KeyCode.Q) ? 1f : 0) + (Input.GetKey(KeyCode.E) ? -1f : 0);
+            
+            if (Mathf.Abs(_previousRotatingDirection - rotationDirection) > Mathf.Epsilon)
+            {
+                _startedRotatingAt = Time.time;
+            }
+
+            _previousRotatingDirection = rotationDirection;
+
+            var rotationSpeed = rotateMaxSpeed * Math.Min(Time.time - _startedRotatingAt, rotateFullSpeedTime) /
+                                rotateFullSpeedTime * Time.deltaTime;
+            AddingComponentObject.transform.Rotate(new Vector3(0, 0, rotationDirection * rotationSpeed));
         }
 
         private void SetComponentHovered(PlayerComponent component, bool value)
@@ -259,35 +284,6 @@ namespace Scrapy
                 spriteRenderer.color = value ? selectedColor : Color.white;
             }
         }
-
-        // public void SetAvailableComponents(SaveFile saveFile)
-        // {
-        //     _availableComponents.Clear();
-        //     foreach (var unlockedComponent in saveFile.unlockedComponents)
-        //     {
-        //         var config = GlobalConfig.Instance.AllComponents.FirstOrDefault(x => x.key == unlockedComponent.key);
-        //         if (config == null)
-        //         {
-        //             Debug.LogError($"Can't find unlocked component from save file: {unlockedComponent.key}");
-        //         }
-        //
-        //         var attachedComponents = saveFile.player.attachedComponents.Where(x => x.key == unlockedComponent.key)
-        //             .ToList();
-        //         if (attachedComponents.Count > unlockedComponent.maxCount)
-        //         {
-        //             Debug.LogError($"Player has more attached components than max. Resetting attached components");
-        //             saveFile.player.attachedComponents.Clear();
-        //             attachedComponents.Clear();
-        //         }
-        //
-        //         _availableComponents.Add(new AvailableComponent
-        //         {
-        //             componentConfig = config,
-        //             count = unlockedComponent.maxCount - attachedComponents.Count,
-        //             maxCount = unlockedComponent.maxCount
-        //         });
-        //     }
-        // }
 
         private void UpdateAvailableComponents()
         {
@@ -367,6 +363,7 @@ namespace Scrapy
             {
                 rb.simulated = false;
             }
+            AddingComponentObject.GetComponent<PlayerComponent>().enabled = false;
         }
 
         private void CheckIfCanPlaceComponent()
@@ -391,7 +388,10 @@ namespace Scrapy
             CanPlaceComponent = result.Value;
             PlaceObjectError = result.Error;
             AttachmentParent = result.Parent;
+        }
 
+        private void UpdateAddingObjectColor()
+        {
             foreach (var spriteRenderer in AddingComponentObject.GetComponentsInChildren<SpriteRenderer>())
             {
                 spriteRenderer.color = CanPlaceComponent ? canPlaceColor : cantPlaceColor;
@@ -403,7 +403,7 @@ namespace Scrapy
             Transform targetTransform = GameManager.Instance.Player.transform;
             GameManager.Instance.Player.AttachNewComponent(AddingComponent.componentConfig,
                 AddingComponentObject.transform.position.XY() - targetTransform.position.XY(),
-                AddingComponentObject.transform.rotation.z - targetTransform.rotation.z,
+                AddingComponentObject.transform.rotation.eulerAngles.z - targetTransform.rotation.eulerAngles.z,
                 AttachmentParent);
 
             GameManager.Instance.FreezePlayer();

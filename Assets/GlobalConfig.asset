@@ -13,5 +13,8 @@ MonoBehaviour:
   m_Name: GlobalConfig
   m_EditorClassIdentifier: 
   AllComponents:
-  - {fileID: 11400000, guid: 30efa40fe96869345b1e6825b56a746f, type: 2}
   - {fileID: 11400000, guid: 8b3061e4751e2cf478cc40124bee211d, type: 2}
+  - {fileID: 11400000, guid: c25e47093d4be594db1cdbd6cbe0ad1d, type: 2}
+  - {fileID: 11400000, guid: 3dcd2bf220c6a704ca66dad8c49bd3dd, type: 2}
+  - {fileID: 11400000, guid: 30efa40fe96869345b1e6825b56a746f, type: 2}
+  - {fileID: 11400000, guid: 45339ed8d7fa8e34fb0afba39c7cce27, type: 2}

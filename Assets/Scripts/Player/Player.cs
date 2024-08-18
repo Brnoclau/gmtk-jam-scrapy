@@ -6,11 +6,15 @@ using UnityEngine;
 
 namespace Scrapy.Player
 {
+    [RequireComponent(typeof(Rigidbody2D))]
     public class Player : MonoBehaviour
     {
-        [SerializeField] float _maxWheelsSpeed;
-        [SerializeField] float _lerp;
-        [SerializeField] private ParticleSystem _thrusterParticles;
+        [Header("No components configuration")] [SerializeField]
+        private float _maxBodyTorque;
+
+        [SerializeField] private float _maxBodyAngularSpeed;
+        [SerializeField] private float _bodyTorqueAcceleration;
+        [Header("Obsolete")] [SerializeField] private ParticleSystem _thrusterParticles;
         [SerializeField] private float _maxThrusterForce;
         [SerializeField] private float _maxThrusterTorque;
         [SerializeField] private float _maxThrusterCharge;
@@ -23,13 +27,18 @@ namespace Scrapy.Player
         public float ThrusterCharge { get; private set; }
         public float MaxThrusterCharge => _maxThrusterCharge;
 
+        private Rigidbody2D _rb;
         ConstantForce2D _thrusterForce;
         List<WheelJoint2D> _wheelJoints = new();
         private bool _thrusterFinishedDuringThisInput;
         private float _currentWheelsSpeed;
         private float _thrusterLastUsedTime;
 
-        // Start is called before the first frame update
+        private void Awake()
+        {
+            _rb = GetComponent<Rigidbody2D>();
+        }
+
         void Start()
         {
             _wheelJoints = new List<WheelJoint2D>();
@@ -43,19 +52,42 @@ namespace Scrapy.Player
             _thrusterParticles.Stop();
         }
 
-        // Update is called once per frame
         void Update()
         {
-            if (GameManager.Instance.State != GameState.Playing)
+            if (GameManager.Instance.State != GameState.Playing) return;
+
+            MoveBodyIfNoWheelsAttached();
+            // var horizontalInput = Input.GetAxis("Horizontal");
+            // _currentWheelsSpeed =
+            // Mathf.Lerp(_currentWheelsSpeed, -horizontalInput * _maxWheelsSpeed, _lerp * Time.deltaTime);
+            // SetWheelsSpeed(_currentWheelsSpeed);
+            UpdateThruster();
+        }
+
+        private void FixedUpdate()
+        {
+            if (GameManager.Instance.State != GameState.Playing) return;
+            MoveBodyIfNoWheelsAttached();
+        }
+
+        private void MoveBodyIfNoWheelsAttached()
+        {
+            if (_wheelJoints.Count > 0) return;
+            var direction = -Input.GetAxis("Horizontal");
+            if ((direction > 0 && _rb.angularVelocity > _maxBodyAngularSpeed) ||
+                (direction < 0 && _rb.angularVelocity < -_maxBodyAngularSpeed))
             {
+                // don't apply torque to the same direction if already
                 return;
             }
 
-            var horizontalInput = Input.GetAxis("Horizontal");
-            _currentWheelsSpeed =
-                Mathf.Lerp(_currentWheelsSpeed, -horizontalInput * _maxWheelsSpeed, _lerp * Time.deltaTime);
-            SetWheelsSpeed(_currentWheelsSpeed);
-            UpdateThruster();
+            // if ((direction > 0 && _rb.totalTorque > _maxBodyTorque) ||
+            //     (direction < 0 && _rb.totalTorque < -_maxBodyTorque))
+            // {
+            //     return;
+            // }
+
+            _rb.totalTorque = direction * _maxBodyTorque;
         }
 
         public List<AttachedComponentSave> GetAttachedComponentsSave()
@@ -65,13 +97,14 @@ namespace Scrapy.Player
             {
                 var parentComponentIndex = -1;
                 var attachedComponent = _attachedComponents[i];
-            
+
                 if (attachedComponent.parent != null)
                 {
-                    var parentAttachedComponent = _attachedComponents.Find(x => x.component == attachedComponent.parent);
+                    var parentAttachedComponent =
+                        _attachedComponents.Find(x => x.component == attachedComponent.parent);
                     parentComponentIndex = _attachedComponents.IndexOf(parentAttachedComponent);
                 }
-                
+
                 var save = new AttachedComponentSave()
                 {
                     key = attachedComponent.config.key,
@@ -103,23 +136,27 @@ namespace Scrapy.Player
                     Debug.LogError($"Can't find component with key {save.key}");
                     continue;
                 }
-            
+
                 BodyPlayerComponent parent = null;
                 if (save.parentId >= 0)
                 {
                     var parentObject = _attachedComponents[save.parentId];
                     if (parentObject.component is not BodyPlayerComponent)
                     {
-                        Debug.LogError("Component in save has parent component which is not BodyPlayerComponent! Aborting.");
+                        Debug.LogError(
+                            "Component in save has parent component which is not BodyPlayerComponent! Aborting.");
                         return;
                     }
+
                     parent = parentObject.component as BodyPlayerComponent;
                 }
+
                 AttachNewComponent(config, save.position, save.rotation, parent);
             }
         }
 
-        public void AttachNewComponent(PlayerComponentConfig config, Vector2 position, float rotation, BodyPlayerComponent parent)
+        public void AttachNewComponent(PlayerComponentConfig config, Vector2 position, float rotation,
+            BodyPlayerComponent parent)
         {
             if (parent != null)
             {
@@ -169,12 +206,23 @@ namespace Scrapy.Player
                         break;
                     }
 
+                    if (componentClass is not WheelPlayerComponent wheelPlayerComponent)
+                    {
+                        Debug.LogError("Wheel component doesn't have WheelPlayerComponent");
+                        break;
+                    }
+
                     var wheelJoint = gameObject.AddComponent<WheelJoint2D>();
+                    wheelPlayerComponent.WheelJoint2D = wheelJoint;
                     wheelJoint.connectedBody = rb;
                     wheelJoint.anchor = component.transform.localPosition.XY();
                     wheelJoint.suspension = new JointSuspension2D()
                     {
                         frequency = 10
+                    };
+                    wheelJoint.motor = new JointMotor2D()
+                    {
+                        maxMotorTorque = config.wheelMaxTorque
                     };
                     _wheelJoints.Add(wheelJoint);
                     attachedComponent.WheelJoint = wheelJoint;
@@ -252,16 +300,16 @@ namespace Scrapy.Player
             }
         }
 
-        private void SetWheelsSpeed(float speed)
-        {
-            foreach (var wheelJoint in _wheelJoints)
-            {
-                wheelJoint.useMotor = true;
-                JointMotor2D motor = wheelJoint.motor;
-                motor.motorSpeed = speed;
-                wheelJoint.motor = motor;
-            }
-        }
+        // private void SetWheelsSpeed(float speed)
+        // {
+        //     foreach (var wheelJoint in _wheelJoints)
+        //     {
+        //         wheelJoint.useMotor = true;
+        //         JointMotor2D motor = wheelJoint.motor;
+        //         motor.motorSpeed = speed;
+        //         wheelJoint.motor = motor;
+        //     }
+        // }
     }
 
     public class AttachedComponent

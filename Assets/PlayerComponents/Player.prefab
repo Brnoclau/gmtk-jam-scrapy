@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2239763471364073206}
   - component: {fileID: 4318870402670066372}
   - component: {fileID: 59457363700809810}
-  - component: {fileID: 337497247888446334}
   m_Layer: 12
   m_Name: Body
   m_TagString: Untagged
@@ -125,33 +124,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 1.2773436
---- !u!50 &337497247888446334
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1175461822915646004}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!1 &4610385685516339169
 GameObject:
   m_ObjectHideFlags: 0
@@ -162,7 +134,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2196385166979130898}
   - component: {fileID: 5165385293506016725}
-  - component: {fileID: 6650365668681105210}
   - component: {fileID: 1312046540762431918}
   - component: {fileID: 2084668843808956044}
   - component: {fileID: 943632827021866162}
@@ -202,39 +173,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 920244f41a1ab4346adcd7a6514302ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxWheelsSpeed: 4000
-  _lerp: 0.5
+  _maxBodyTorque: 40
+  _maxBodyAngularSpeed: 200
+  _bodyTorqueAcceleration: 3
   _thrusterParticles: {fileID: 5263464345819948044}
   _maxThrusterForce: 35
   _maxThrusterTorque: 35
   _maxThrusterCharge: 1
   _thrusterRechargeRelay: 0.5
   _thrusterRechargePerSecond: 3
---- !u!235 &6650365668681105210
-WheelJoint2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4610385685516339169}
-  m_Enabled: 1
-  serializedVersion: 4
-  m_EnableCollision: 0
-  m_ConnectedRigidBody: {fileID: 337497247888446334}
-  m_BreakForce: Infinity
-  m_BreakTorque: Infinity
-  m_BreakAction: 3
-  m_AutoConfigureConnectedAnchor: 1
-  m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0, y: 0}
-  m_Suspension:
-    m_DampingRatio: 0.7
-    m_Frequency: 10
-    m_Angle: 90
-  m_UseMotor: 0
-  m_Motor:
-    m_MotorSpeed: 0
-    m_MaximumMotorForce: 10000
 --- !u!50 &1312046540762431918
 Rigidbody2D:
   serializedVersion: 5
@@ -247,7 +194,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 100
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 1
