@@ -1,5 +1,8 @@
-﻿public enum GameState
+﻿namespace Scrapy
 {
-    Workshop,
-    Playing
+    public enum GameState
+    {
+        Workshop,
+        Playing
+    }
 }

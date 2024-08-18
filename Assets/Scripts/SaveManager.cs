@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 
-namespace Script
+namespace Scrapy
 {
     public class SaveManager : MonoBehaviour
     {
@@ -35,7 +35,7 @@ namespace Script
 
             var saveFile = new SaveFile();
             saveFile.player = new PlayerSaveData();
-            saveFile.player.attachedComponents = gameManager.Player.componentsConfig.ToSaves();
+            saveFile.player.attachedComponents = gameManager.Player.GetAttachedComponentsSave();
             saveFile.unlockedComponents = gameManager.WorkshopController.AvailableComponents.Select(x =>
             {
                 return new UnlockedComponentData()
@@ -60,6 +60,7 @@ namespace Script
             }
 
             Debug.Log("Successfully saved the game");
+            CurrentSave = saveFile;
         }
 
         public SaveFile LoadGame()

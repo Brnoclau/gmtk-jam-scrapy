@@ -1,9 +1,9 @@
 ﻿using System;
-using Script.UI.Workshop;
+using Scrapy.UI.Workshop;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Script
+namespace Scrapy
 {
     public class UIController : MonoBehaviour
     {
@@ -31,7 +31,7 @@ namespace Script
             OnPausedChanged(GameManager.Instance.IsGamePaused);
             OnStateChanged(GameManager.Instance.State, GameManager.Instance.State);
 
-            toWorkshopButton.onClick.AddListener(() => ToWorkshopTriggered?.Invoke());
+            toWorkshopButton.onClick.AddListener(() => GameManager.Instance.State = GameState.Workshop);
 
             resumeButton.onClick.AddListener(() => GameManager.Instance.IsGamePaused = false);
             saveButton.onClick.AddListener(() => GameManager.Instance.SaveGame());

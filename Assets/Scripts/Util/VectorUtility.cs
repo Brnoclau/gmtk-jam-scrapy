@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Script.Util
+namespace Scrapy.Util
 {
     public static class VectorUtility
     {

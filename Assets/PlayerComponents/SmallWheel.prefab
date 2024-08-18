@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7922432853108702265}
+  - component: {fileID: 4928696445501425106}
   - component: {fileID: 7097796928596054876}
   - component: {fileID: 1461694537668166068}
   - component: {fileID: 7364489390930709244}
-  - component: {fileID: 4928696445501425106}
   m_Layer: 11
   m_Name: SmallWheel
   m_TagString: Untagged
@@ -32,9 +32,26 @@ Transform:
   m_LocalPosition: {x: -0.451, y: -0.251, z: 0}
   m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 7256786259295506544}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4928696445501425106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3217288627225489049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ab415a7ebc14f54817c1b7b6196b26f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attachmentPoints:
+  - {fileID: 7256786259295506544}
+  minRequiredAttachedPoints: 1
+  maxRequiredAttachedPoints: 1
 --- !u!212 &7097796928596054876
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -125,7 +142,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 1.03
+  m_Radius: 0.81
 --- !u!50 &7364489390930709244
 Rigidbody2D:
   serializedVersion: 5
@@ -153,15 +170,34 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &4928696445501425106
-MonoBehaviour:
+--- !u!1 &4433112497009081568
+GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3217288627225489049}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ab415a7ebc14f54817c1b7b6196b26f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7256786259295506544}
+  m_Layer: 11
+  m_Name: AttachmentPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7256786259295506544
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4433112497009081568}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7922432853108702265}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

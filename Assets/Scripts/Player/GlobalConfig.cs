@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Script
+namespace Scrapy.Player
 {
     
     [CreateAssetMenu(menuName = "Create GlobalConfig", fileName = "GlobalConfig", order = 0)]

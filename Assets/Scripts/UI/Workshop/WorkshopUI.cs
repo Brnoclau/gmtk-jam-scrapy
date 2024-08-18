@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Scrapy.Player;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Script.UI.Workshop
+namespace Scrapy.UI.Workshop
 {
     [RequireComponent(typeof(Canvas))]
     public class WorkshopUI : MonoBehaviour
@@ -13,6 +15,11 @@ namespace Script.UI.Workshop
         [SerializeField] private ScrollRect componentsScrollView;
         [SerializeField] private RectTransform componentsContainer;
         [SerializeField] private ComponentUI componentPrefab;
+        [SerializeField] private TMP_Text placementErrorText;
+        [Header("Selected object actions")]
+        [SerializeField] private RectTransform selectedObjectActionsUI;
+        [SerializeField] private TMP_Text selectedComponentNameText;
+        [SerializeField] private Button deleteComponentButton;
 
         private Canvas _canvas;
         private WorkshopController _workshopController;
@@ -25,12 +32,49 @@ namespace Script.UI.Workshop
             _canvas = GetComponent<Canvas>();
             _workshopController = GameManager.Instance.WorkshopController;
             _workshopController.ActiveChanged += OnActiveChanged;
-            _workshopController.SelectedComponentChanged += OnNewComponentSelected;
-            _workshopController.PlacedComponent += OnPlacedComponent;
+            _workshopController.AddingComponentChanged += OnNewComponentAdding;
+            _workshopController.AvailableComponentChanged += OnAvailableComponentChanged;
+            _workshopController.AvailableComponentsChanged += OnAvailableComponentsChanged;
+            _workshopController.SelectedComponentChanged += OnSelectedComponentChanged;
             playButton.onClick.AddListener(OnPlayButtonClicked);
+            deleteComponentButton.onClick.AddListener(OnDeleteComponentClicked);
+            OnSelectedComponentChanged(_workshopController.SelectedComponent);
+            placementErrorText.text = "";
         }
 
-        private void OnPlacedComponent(AvailableComponent component)
+        private void OnAvailableComponentsChanged()
+        {
+            UpdateAvailableComponents();
+        }
+
+        private void Update()
+        {
+            if (!_workshopController.Active) return;
+            if (_workshopController.Mode == WorkshopController.WorkshopMode.Adding)
+            {
+                placementErrorText.text = _workshopController.PlaceObjectError;
+            }
+            else
+            {
+                placementErrorText.text = "";
+            }
+        }
+
+        private void OnDeleteComponentClicked()
+        {
+            _workshopController.DeleteSelectedComponent();
+        }
+
+        private void OnSelectedComponentChanged(PlayerComponent newSelectedObject)
+        {
+            selectedObjectActionsUI.gameObject.SetActive(newSelectedObject != null);
+            if (newSelectedObject != null)
+            {
+                selectedComponentNameText.text = newSelectedObject.Config.uiName;
+            }
+        }
+
+        private void OnAvailableComponentChanged(AvailableComponent component)
         {
             var ui = _componentUIs.FirstOrDefault(x => x.Config == component.componentConfig);
             if (ui == null)
@@ -52,11 +96,11 @@ namespace Script.UI.Workshop
         public void UpdateAvailableComponents()
         {
             var availableComponents = GameManager.Instance.WorkshopController.AvailableComponents;
-            if (_componentUIs.Count < availableComponents.Count)
+            while (_componentUIs.Count < availableComponents.Count)
             {
                 SpawnNewComponentUI();
             }
-            else if (_componentUIs.Count > availableComponents.Count)
+            if (_componentUIs.Count > availableComponents.Count)
             {
                 DeleteComponentUIs(_componentUIs.Count - availableComponents.Count);
             }
@@ -66,36 +110,53 @@ namespace Script.UI.Workshop
                 var component = availableComponents[i];
                 var ui = _componentUIs[i];
                 UpdateComponentUIState(ui, component);
-                ui.button.onClick.AddListener(() => _workshopController.TrySetSelectedComponent(component.componentConfig));
+                ui.button.onClick.RemoveAllListeners();
+                ui.button.onClick.AddListener(() => _workshopController.SetAddingComponent(component.componentConfig));
             }
         }
 
         void UpdateComponentUIState(ComponentUI ui, AvailableComponent component)
         {
+            Debug.Log($"Updating component UI: {component.componentConfig.key} {component.count}/{component.maxCount}");
             ui.InitFromConfig(component.componentConfig);
             ui.SetCount(component.count, component.maxCount);
+            
             ui.State = component.count > 0
-                ? ComponentUI.ComponentUIState.Normal
+                ? (component == _workshopController.AddingComponent ? 
+                    ComponentUI.ComponentUIState.Selected : 
+                    ComponentUI.ComponentUIState.Normal)
                 : ComponentUI.ComponentUIState.Disabled;
         }
 
-        void OnNewComponentSelected(AvailableComponent availableComponent)
+        void OnNewComponentAdding(AvailableComponent _)
         {
-            if (_selectedUI != null)
-            {
-                _selectedUI.State = ComponentUI.ComponentUIState.Normal;
-            }
+            var availableComponents = GameManager.Instance.WorkshopController.AvailableComponents;
 
-            if (availableComponent == null)
+            for (int i = 0; i < availableComponents.Count; i++)
             {
-                return;
+                var component = availableComponents[i];
+                var ui = _componentUIs[i];
+                UpdateComponentUIState(ui, component);
             }
-            var ui = _componentUIs.FirstOrDefault(x => x.Config == availableComponent.componentConfig);
-            if (ui != null)
-            {
-                _selectedUI = ui;
-                _selectedUI.State = ComponentUI.ComponentUIState.Selected;
-            }
+            // if (_selectedUI != null)
+            // {
+            //     _selectedUI.State = component.count > 0
+            //         ? (component == _workshopController.AddingComponent ? 
+            //             ComponentUI.ComponentUIState.Selected : 
+            //             ComponentUI.ComponentUIState.Normal)
+            //         : ComponentUI.ComponentUIState.Disabled;
+            // }
+            //
+            // if (availableComponent == null)
+            // {
+            //     return;
+            // }
+            //
+            // var ui = _componentUIs.FirstOrDefault(x => x.Config == availableComponent.componentConfig);
+            // if (ui != null)
+            // {
+            //     UpdateComponentUIState(_selectedUI, availableComponent);
+            // }
         }
 
         void SpawnNewComponentUI()

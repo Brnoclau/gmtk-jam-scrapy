@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using NUnit.Framework;
-using UnityEngine.Serialization;
+using Scrapy.Player;
 
-namespace Script
+namespace Scrapy
 {
     [Serializable]
     public struct SaveFile

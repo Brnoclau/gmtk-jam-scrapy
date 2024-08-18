@@ -1,6 +1,7 @@
 ﻿using System;
+using Scrapy.Player;
 
-namespace Script
+namespace Scrapy
 {
     [Serializable]
     public class AvailableComponent

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Script
+namespace Scrapy.Player
 {
     public enum PlayerComponentType
     {

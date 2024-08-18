@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Scrapy.Player;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-namespace Script.UI.Workshop
+namespace Scrapy.UI.Workshop
 {
     [RequireComponent(typeof(Animator))]
     public class ComponentUI : MonoBehaviour

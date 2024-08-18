@@ -1,17 +1,18 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Script
+namespace Scrapy
 {
     public class ThrusterChargeUI : MonoBehaviour
     {
-        [SerializeField] private Player _player;
         [SerializeField] private Image _chargeBar;
 
         // Update is called once per frame
         void Update()
         {
-            _chargeBar.fillAmount = Mathf.Lerp(_chargeBar.fillAmount, _player.ThrusterCharge / _player.MaxThrusterCharge, 0.1f);
+            var player = GameManager.Instance.Player;
+            if (player == null) return;
+            _chargeBar.fillAmount = Mathf.Lerp(_chargeBar.fillAmount, player.ThrusterCharge / player.MaxThrusterCharge, 0.1f);
         }
     }
 }

@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AllComponents:
   - {fileID: 11400000, guid: 30efa40fe96869345b1e6825b56a746f, type: 2}
+  - {fileID: 11400000, guid: 8b3061e4751e2cf478cc40124bee211d, type: 2}
