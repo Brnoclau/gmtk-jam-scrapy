@@ -173,8 +173,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 920244f41a1ab4346adcd7a6514302ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxBodyTorque: 50
-  _maxBodyAngularSpeed: 200
+  _maxBodyTorque: 100
+  _maxBodyAngularSpeed: 400
   torqueCurve:
     serializedVersion: 2
     m_Curve:
@@ -211,7 +211,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 100
+  m_Mass: 30
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 1
