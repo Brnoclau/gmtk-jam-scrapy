@@ -2485,7 +2485,7 @@ MonoBehaviour:
   continueButton: {fileID: 1599553210}
   creditsButton: {fileID: 689987950}
   exitToDesktopButton: {fileID: 718404945}
-  gameSceneName: SampleScene
+  gameSceneName: MainLevel
   sfxSlider: {fileID: 202371198}
   musicSlider: {fileID: 933578276}
   sfxSoundOnSliderChange: {fileID: 8300000, guid: e15d9279e957e484fb60168637fb8d6c, type: 3}
