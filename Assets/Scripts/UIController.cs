@@ -1,4 +1,5 @@
 ﻿using System;
+using Scrapy.UI;
 using Scrapy.UI.Workshop;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,7 +9,7 @@ namespace Scrapy
     public class UIController : MonoBehaviour
     {
         [SerializeField] private WorkshopUI workshopUI;
-        [SerializeField] private GameObject gameplayUI;
+        [SerializeField] private FadeCanvas gameplayUI;
         [SerializeField] private GameObject pauseUI;
 
         [Header("GamePlayUI")] [SerializeField]
@@ -62,7 +63,7 @@ namespace Scrapy
 
         void SetGameplayUIActive(bool value)
         {
-            gameplayUI.gameObject.SetActive(value);
+            gameplayUI.SetOpen(value);
         }
 
         void OnPlayerEnteredWorkshop()

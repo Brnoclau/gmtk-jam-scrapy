@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -48,9 +49,24 @@ namespace Scrapy
 
         public Player.Player Player => _player;
         public WorkshopController WorkshopController => workshopController;
-        
+
         public WorkshopArea LastUsedWorkshop { get; private set; }
-    
+
+        public Interactable NearbyInteractable
+        {
+            get => _nearbyInteractable;
+            set
+            {
+                if (value == _nearbyInteractable) return;
+                _nearbyInteractable = value;
+                if (_nearbyInteractable) InteractableChanged?.Invoke(_nearbyInteractable);
+                else InteractableChanged?.Invoke(_nearbyInteractable);
+            }
+        }
+
+        public event Action<Interactable> InteractableChanged;
+        private Interactable _nearbyInteractable;
+
 
         public bool PlayerInWorkshop
         {
@@ -112,6 +128,11 @@ namespace Scrapy
             {
                 RespawnPlayer();
             }
+
+            if (State == GameState.Playing)
+            {
+                
+            }
         }
 
         public void LoadGame()
@@ -123,14 +144,14 @@ namespace Scrapy
                 var workshop = workshopAreas.FirstOrDefault(x => x.Key == save.lastUsedWorkshopKey);
                 if (workshop == null)
                 {
-                    Debug.LogError($"No workshop registered in GameManager with key {save.lastUsedWorkshopKey}. Will respawn at Start Point.");
+                    Debug.LogError(
+                        $"No workshop registered in GameManager with key {save.lastUsedWorkshopKey}. Will respawn at Start Point.");
                     save.lastUsedWorkshopKey = null;
                 }
                 else
                 {
                     LastUsedWorkshop = workshop;
                 }
-
             }
             // WorkshopController.SetAvailableComponents(save);
         }
@@ -149,7 +170,7 @@ namespace Scrapy
             {
                 SaveManager.Instance.SaveGame();
             }
-            
+
             if (newState == GameState.Workshop)
             {
                 if (!PlayerInWorkshop)
@@ -165,11 +186,12 @@ namespace Scrapy
                 RespawnPlayer();
                 _player.transform.position = workshop.PlayerHoldPosition;
                 FreezePlayer();
-            } else if (newState == GameState.Playing)
+            }
+            else if (_state == GameState.Workshop && newState == GameState.Playing)
             {
                 var workshop = CurrentWorkshopArea;
                 RespawnPlayer();
-                if (workshop != null) 
+                if (workshop != null)
                     _player.transform.position = workshop.PlayerHoldPosition;
             }
 
@@ -186,9 +208,9 @@ namespace Scrapy
                 _player = null;
                 Destroy(toDestroy.gameObject);
             }
-            
+
             _player = Instantiate(playerPrefab);
-            
+
             _player.transform.position = GetRespawnPosition();
             _player.LoadFromSaves(SaveManager.Instance.CurrentSave.player.attachedComponents);
             cinemachineCamera.Follow = _player.transform;
@@ -211,7 +233,7 @@ namespace Scrapy
 
             foreach (var playerAttachedComponent in _player.AttachedComponents)
             {
-                playerAttachedComponent.component.enabled = false;   
+                playerAttachedComponent.component.enabled = false;
             }
         }
     }

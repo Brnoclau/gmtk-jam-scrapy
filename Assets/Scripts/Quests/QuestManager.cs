@@ -46,6 +46,7 @@ namespace Scrapy
                 Debug.LogWarning("Collected empty checkpoint");
                 return;
             }
+            
             var save = SaveManager.Instance.CurrentSave;
             if (save.reachedCheckpoints.Contains(checkpoint)) return;
 

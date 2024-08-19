@@ -18,15 +18,15 @@ MonoBehaviour:
     name: First components
     description: Collect your first components
     playCompleteQuestAnimation: 1
-  - checkpointKey: enter-first-workshop
-    activeWhenCheckpointsComplete:
-    - collect-first-components
-    name: First workshop
-    description: Enter the workshop
-    playCompleteQuestAnimation: 1
   - checkpointKey: quest-toilet-paper
     activeWhenCheckpointsComplete:
     - collect-first-components
     name: Toilet Paper
     description: Find and collect the toilet paper
+    playCompleteQuestAnimation: 1
+  - checkpointKey: inspect-tv
+    activeWhenCheckpointsComplete:
+    - ALWAYS_HIDDEN
+    name: Inspect a TV
+    description: Find a TV and inspect it
     playCompleteQuestAnimation: 1

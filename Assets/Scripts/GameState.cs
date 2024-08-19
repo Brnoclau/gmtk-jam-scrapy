@@ -3,6 +3,7 @@
     public enum GameState
     {
         Workshop,
-        Playing
+        Playing,
+        Dialog
     }
 }

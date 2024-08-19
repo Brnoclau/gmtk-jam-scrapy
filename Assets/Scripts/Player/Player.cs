@@ -55,13 +55,17 @@ namespace Scrapy.Player
         void Update()
         {
             if (GameManager.Instance.State != GameState.Playing) return;
-
+            
             MoveBodyIfNoWheelsAttached();
-            // var horizontalInput = Input.GetAxis("Horizontal");
-            // _currentWheelsSpeed =
-            // Mathf.Lerp(_currentWheelsSpeed, -horizontalInput * _maxWheelsSpeed, _lerp * Time.deltaTime);
-            // SetWheelsSpeed(_currentWheelsSpeed);
             UpdateThruster();
+
+            if (GameManager.Instance.NearbyInteractable != null)
+            {
+                if (Input.GetKeyDown(KeyCode.F))
+                {
+                    GameManager.Instance.NearbyInteractable.Interact();
+                }
+            }
         }
 
         private void FixedUpdate()
