@@ -25,25 +25,67 @@ namespace Scrapy.Player
                 //         maxMotorTorque = Config.wheelMaxTorque
                 //     };
                 // }
-
+                ApplyBreaks();
                 return;
             }
             
             var direction = -Input.GetAxis("Horizontal");
+            var breaksDown = Input.GetKey(KeyCode.Space);
 
-            if ((direction > 0 && WheelJoint2D.jointSpeed > Config.wheelSpeed) ||
-                (direction < 0 && WheelJoint2D.jointSpeed < -Config.wheelSpeed))
-            {
+            // if ((direction > 0 && WheelJoint2D.jointSpeed > Config.wheelSpeed) ||
+                // (direction < 0 && WheelJoint2D.jointSpeed < -Config.wheelSpeed))
+            // {
                 // don't apply torque to the same direction if already
+                // return;
+            // }
+
+            if (breaksDown && Mathf.Abs(WheelJoint2D.jointSpeed) > Mathf.Epsilon
+                // || 
+                // direction > 0 && WheelJoint2D.jointSpeed < 0 ||
+                // direction < 0 && WheelJoint2D.jointSpeed > 0
+                )
+            {
+                // Apply break torque
+                ApplyBreaks();
+                // if (Mathf.Abs(WheelJoint2D.jointSpeed) < 1)
+                // {
+                    // return;
+                // }
+                // WheelJoint2D.connectedBody.angularDamping = Config.breakDamping;
+                // if (Mathf.Abs(WheelJoint2D.connectedBody.angularVelocity) < Config.breakStopWheelsVelocity)
+                // {
+                //     WheelJoint2D.connectedBody.angularVelocity = 0;
+                // }
+                
+                // WheelJoint2D.connectedBody.angularVelocity -= Mathf.Sign(WheelJoint2D.jointSpeed) * Config.breakTorque * Time.fixedDeltaTime;
+                
+                // WheelJoint2D.connectedBody.AddTorque(-Mathf.Sign(WheelJoint2D.jointSpeed) * Config.breakTorque);
                 return;
             }
             
-            WheelJoint2D.connectedBody.AddTorque(direction * Config.wheelMaxTorque);
+            WheelJoint2D.useMotor = false;
+
+            var absSpeed = Mathf.Abs(WheelJoint2D.jointSpeed);
+            var speedPosClamped = Mathf.Clamp01(absSpeed / Config.wheelSpeed);
+            var torque = direction * WheelJoint2D.jointSpeed > 0 ? 
+                Config.wheelMaxTorque * Config.torqueCurve.Evaluate(speedPosClamped) : 
+                Config.wheelMaxTorque; 
+            WheelJoint2D.connectedBody.AddTorque(direction * torque);
             // WheelJoint2D.motor = new JointMotor2D()
             // {
             //     motorSpeed = -Config.wheelSpeed * horizontalInput,
             //     maxMotorTorque = Config.wheelMaxTorque
             // };
+        }
+
+        private void ApplyBreaks()
+        {
+                WheelJoint2D.motor = new JointMotor2D()
+                {
+                    motorSpeed = 0,
+                    maxMotorTorque = Config.breakTorque
+                };
+                WheelJoint2D.useMotor = true;
         }
     }
 }

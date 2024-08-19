@@ -23,5 +23,13 @@ namespace Scrapy.Player
 
         [Tooltip("Maximum torque wheel can apply to reach it's maximum speed")]
         public float wheelMaxTorque = 100;
+        
+        [Tooltip("Represents how much torque is applied depending on wheel speed")]
+        public AnimationCurve torqueCurve;
+
+        [Tooltip("How much torque is applied when speed is in the opposite direction or player uses breaks"),Min(0)]
+        public float breakTorque;
+
+        // public float breakDamping = 100;
     }
 }
