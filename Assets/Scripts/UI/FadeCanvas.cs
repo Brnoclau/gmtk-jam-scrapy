@@ -13,6 +13,7 @@ namespace Scrapy.UI
         public float OpenFadeDuration => openFadeDuration;
         public float CloseFadeDuration => closeFadeDuration;
 
+        private bool _open;
         private Canvas _canvas;
         private CanvasGroup _canvasGroup;
 
@@ -31,9 +32,11 @@ namespace Scrapy.UI
 
         public virtual void SetOpen(bool value)
         {
-            if (_canvas.enabled == value) return;
+            if (_open == value) return;
+            _open = value;
             OpenChanged?.Invoke(value);
             if (_tween is { active: true }) _tween.Kill();
+            _canvasGroup.DOKill();
             if (value)
             {
                 _canvas.enabled = true;

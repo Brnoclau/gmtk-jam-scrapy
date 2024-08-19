@@ -12,7 +12,7 @@ namespace Scrapy
         {
             var player = GameManager.Instance.Player;
             if (player == null) return;
-            _chargeBar.fillAmount = Mathf.Lerp(_chargeBar.fillAmount, player.ThrusterCharge / player.MaxThrusterCharge, 0.1f);
+            // _chargeBar.fillAmount = Mathf.Lerp(_chargeBar.fillAmount, player.ThrusterCharge / player.MaxThrusterCharge, 0.1f);
         }
     }
 }

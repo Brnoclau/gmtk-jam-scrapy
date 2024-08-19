@@ -9,23 +9,16 @@ namespace Scrapy.Player
     [RequireComponent(typeof(Rigidbody2D))]
     public class Player : MonoBehaviour
     {
-        [Header("No components configuration")] [SerializeField]
-        private float _maxBodyTorque;
-
+        [SerializeField] private float _maxBodyTorque;
         [SerializeField] private float _maxBodyAngularSpeed;
         [SerializeField] private float _bodyTorqueAcceleration;
-        [Header("Obsolete")] [SerializeField] private ParticleSystem _thrusterParticles;
-        [SerializeField] private float _maxThrusterForce;
-        [SerializeField] private float _maxThrusterTorque;
-        [SerializeField] private float _maxThrusterCharge;
-        [SerializeField] private float _thrusterRechargeRelay;
-        [SerializeField] private float _thrusterRechargePerSecond;
-
+        [Tooltip("Represents how much torque is applied depending on angular speed")]
+        public AnimationCurve torqueCurve;
         private readonly List<AttachedComponent> _attachedComponents = new();
         public IReadOnlyList<AttachedComponent> AttachedComponents => _attachedComponents;
 
         public float ThrusterCharge { get; private set; }
-        public float MaxThrusterCharge => _maxThrusterCharge;
+        // public float MaxThrusterCharge => _maxThrusterCharge;
 
         private Rigidbody2D _rb;
         ConstantForce2D _thrusterForce;
@@ -46,20 +39,21 @@ namespace Scrapy.Player
             {
                 _wheelJoints.Add(wheel);
             }
-
-            _thrusterForce = GetComponent<ConstantForce2D>();
-            ThrusterCharge = _maxThrusterCharge;
-            _thrusterParticles.Stop();
         }
 
         void Update()
         {
             if (GameManager.Instance.State != GameState.Playing) return;
-            
-            MoveBodyIfNoWheelsAttached();
-            // UpdateThruster();
 
-            if (GameManager.Instance.NearbyInteractable != null)
+
+            if (GameManager.Instance.PlayerInWorkshop)
+            {
+                if (Input.GetKeyDown(KeyCode.F))
+                {
+                    GameManager.Instance.State = GameState.Workshop;
+                }
+            } 
+            else if (GameManager.Instance.NearbyInteractable != null)
             {
                 if (Input.GetKeyDown(KeyCode.F))
                 {
@@ -71,12 +65,12 @@ namespace Scrapy.Player
         private void FixedUpdate()
         {
             if (GameManager.Instance.State != GameState.Playing) return;
-            MoveBodyIfNoWheelsAttached();
+            ApplyRotation();
         }
 
-        private void MoveBodyIfNoWheelsAttached()
+        private void ApplyRotation()
         {
-            if (_wheelJoints.Count > 0) return;
+            // if (_wheelJoints.Count > 0) return;
             var direction = -Input.GetAxis("Horizontal");
             if ((direction > 0 && _rb.angularVelocity > _maxBodyAngularSpeed) ||
                 (direction < 0 && _rb.angularVelocity < -_maxBodyAngularSpeed))
@@ -296,53 +290,6 @@ namespace Scrapy.Player
 
             actionPlayerComponent.Hotkey = hotkey;
         }
-
-        void UpdateThruster()
-        {
-            var horizontalInput = Input.GetAxis("Horizontal");
-
-            if (Input.GetKey(KeyCode.W) && ThrusterCharge > 0 && !_thrusterFinishedDuringThisInput)
-            {
-                _thrusterForce.relativeForce = new Vector2(0, _maxThrusterForce);
-                _thrusterForce.torque = -_maxThrusterTorque * horizontalInput;
-                if (!_thrusterParticles.isEmitting) _thrusterParticles.Play();
-                ThrusterCharge -= Time.deltaTime;
-                if (ThrusterCharge < 0)
-                {
-                    ThrusterCharge = 0;
-                    _thrusterFinishedDuringThisInput = true;
-                }
-
-                _thrusterLastUsedTime = Time.time;
-            }
-            else
-            {
-                _thrusterForce.relativeForce = new Vector2(0, 0);
-                _thrusterForce.torque = 0;
-                _thrusterParticles.Stop();
-                if (_thrusterFinishedDuringThisInput && !Input.GetKey(KeyCode.W))
-                {
-                    _thrusterFinishedDuringThisInput = false;
-                }
-
-                if (Time.time - _thrusterLastUsedTime > _thrusterRechargeRelay)
-                {
-                    ThrusterCharge += _thrusterRechargePerSecond * Time.deltaTime;
-                    if (ThrusterCharge > _maxThrusterCharge) ThrusterCharge = _maxThrusterCharge;
-                }
-            }
-        }
-
-        // private void SetWheelsSpeed(float speed)
-        // {
-        //     foreach (var wheelJoint in _wheelJoints)
-        //     {
-        //         wheelJoint.useMotor = true;
-        //         JointMotor2D motor = wheelJoint.motor;
-        //         motor.motorSpeed = speed;
-        //         wheelJoint.motor = motor;
-        //     }
-        // }
     }
 
     public class AttachedComponent
