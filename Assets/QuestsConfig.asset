@@ -30,3 +30,4 @@ MonoBehaviour:
     name: Inspect a TV
     description: Find a TV and inspect it
     playCompleteQuestAnimation: 1
+  showCreditsAfterCheckpointKey: quest-toilet-paper

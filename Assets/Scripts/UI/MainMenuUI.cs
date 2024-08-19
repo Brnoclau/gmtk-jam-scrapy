@@ -9,6 +9,7 @@ namespace Scrapy.UI
     {
         [SerializeField] private Button newGameButton;
         [SerializeField] private Button continueButton;
+        [SerializeField] private Button creditsButton;
         [SerializeField] private Button exitToDesktopButton;
         [SerializeField] private string gameSceneName;
         
@@ -16,12 +17,15 @@ namespace Scrapy.UI
         [SerializeField] private Slider musicSlider;
         [SerializeField] private AudioClip sfxSoundOnSliderChange;
 
+        [SerializeField] private CreditsUI creditsUI;
+
         private void Awake()
         {
             sfxSlider.onValueChanged.AddListener(SetSfxVolume);   
             musicSlider.onValueChanged.AddListener(SetMusicVolume);   
             newGameButton.onClick.AddListener(StartNewGame);
             continueButton.onClick.AddListener(ContinueGame);
+            creditsButton.onClick.AddListener(ShowCredits);
             exitToDesktopButton.onClick.AddListener(Application.Quit);
         }
 
@@ -62,6 +66,11 @@ namespace Scrapy.UI
         private void SetMusicVolume(float value)
         {
             OptionsManager.Instance.MusicVolume = value;
+        }
+
+        private void ShowCredits()
+        {
+            creditsUI.ShowCredits();
         }
     }
 }

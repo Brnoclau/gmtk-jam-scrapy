@@ -262,16 +262,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c74aaecd404bcb4418f9ee25d03cb34a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  globalConfig: {fileID: 11400000, guid: 9beb2c5c460bfba49b47850e756842eb, type: 2}
   startPoint: {fileID: 4316921087198417057}
   playerPrefab: {fileID: 5165385293506016725, guid: ba84ffbd1439e5a4c9e84ed5a884de52, type: 3}
   levelBottomLeft: {fileID: 7727082282537748091}
   levelTopRight: {fileID: 4786035361133690021}
-  uiController: {fileID: 0}
   workshopController: {fileID: 1031209344426321712}
   cinemachineCamera: {fileID: 0}
   workshopAreas:
   - {fileID: 0}
   - {fileID: 0}
+  creditsUI: {fileID: 0}
+  playingCameraZoom: 5
+  workshopCameraZoom: 3.5
+  dialogCameraZoom: 3
 --- !u!1 &8250582789845848747
 GameObject:
   m_ObjectHideFlags: 0

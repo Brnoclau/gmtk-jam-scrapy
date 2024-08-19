@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using JetBrains.Annotations;
+using Scrapy.Player;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -10,14 +12,23 @@ namespace Scrapy
 {
     public class GameManager : MonoBehaviour
     {
+        [SerializeField] private GlobalConfig globalConfig;
         [SerializeField] private Transform startPoint;
         [SerializeField] private Player.Player playerPrefab;
         [SerializeField] private Transform levelBottomLeft;
         [SerializeField] private Transform levelTopRight;
-        [SerializeField] private UIController uiController;
         [SerializeField] private WorkshopController workshopController;
         [SerializeField] private CinemachineCamera cinemachineCamera;
         [SerializeField] private List<WorkshopArea> workshopAreas;
+        [SerializeField] private CreditsUI creditsUI;
+
+        [Header("Camera settings")] [SerializeField]
+        private float playingCameraZoom = 6;
+
+        [SerializeField] private float workshopCameraZoom = 4;
+        [SerializeField] private float dialogCameraZoom = 4;
+        [SerializeField] private float changeZoomTime = 1;
+        [SerializeField] private Ease changeZoomEase = Ease.OutQuad;
 
         public static GameManager Instance { get; private set; }
 
@@ -109,6 +120,8 @@ namespace Scrapy
             }
 
             Instance = this;
+
+            creditsUI.FinishedCredits += OnFinishedCredits;
         }
 
         private void Start()
@@ -198,7 +211,31 @@ namespace Scrapy
                 if (workshop != null)
                     _player.transform.position = workshop.PlayerHoldPosition;
             }
+            else if (newState == GameState.Credits)
+            {
+                creditsUI.ShowCredits();
+            }
 
+            float newZoom = playingCameraZoom;
+            switch (newState)
+            {
+                case GameState.Playing:
+                    newZoom = playingCameraZoom;
+                    break;
+                case GameState.Workshop:
+                    newZoom = workshopCameraZoom;
+                    break;
+                case GameState.Dialog:
+                    newZoom = dialogCameraZoom;
+                    break;
+            }
+
+            cinemachineCamera.DOKill();
+            DOTween.To(
+                () => cinemachineCamera.Lens.OrthographicSize,
+                value => cinemachineCamera.Lens.OrthographicSize = value,
+                newZoom, changeZoomTime).SetEase(changeZoomEase).SetTarget(cinemachineCamera);
+                
             var oldValue = _state;
             _state = newState;
             StateChanged?.Invoke(oldValue, _state);
@@ -226,12 +263,18 @@ namespace Scrapy
             return startPoint.localPosition;
         }
 
+        private void OnFinishedCredits()
+        {
+            State = GameState.Playing;
+        }
+
         public void FreezePlayer()
         {
             var rbs = _player.GetComponentsInChildren<Rigidbody2D>();
             foreach (var rb in rbs)
             {
                 // rb.simulated = false;
+
                 rb.constraints = RigidbodyConstraints2D.FreezeAll;
             }
 

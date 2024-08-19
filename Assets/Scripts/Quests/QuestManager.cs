@@ -54,6 +54,11 @@ namespace Scrapy
             CheckpointCompleted?.Invoke(checkpoint);
             SaveManager.Instance.SaveGame();
 
+            if (questsConfig.showCreditsAfterCheckpointKey == checkpoint)
+            {
+                GameManager.Instance.State = GameState.Credits;
+            }
+
             var quest = questsConfig.quests.FirstOrDefault(x => x.checkpointKey == checkpoint);
             if (quest == null) return;
             CompleteQuest(quest);

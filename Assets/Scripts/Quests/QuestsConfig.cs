@@ -8,5 +8,6 @@ namespace Scrapy
     public class QuestsConfig : ScriptableObject
     {
         public List<Quest> quests;
+        public string showCreditsAfterCheckpointKey;
     }
 }

@@ -4,6 +4,7 @@
     {
         Workshop,
         Playing,
-        Dialog
+        Dialog,
+        Credits
     }
 }

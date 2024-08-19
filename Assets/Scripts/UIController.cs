@@ -48,6 +48,11 @@ namespace Scrapy
 
         private void Update()
         {
+            if (GameManager.Instance.State == GameState.Credits)
+            {
+                return;
+            }
+            
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 GameManager.Instance.IsGamePaused = !GameManager.Instance.IsGamePaused;
