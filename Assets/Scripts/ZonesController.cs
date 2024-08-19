@@ -36,6 +36,14 @@ namespace Scrapy
                     parallaxEntry.spriteRenderer.color = new Color(1, 1, 1, 0);
                 }
             }
+            
+            GameManager.Instance.StateChanged += InstanceOnStateChanged;
+        }
+
+        private void InstanceOnStateChanged(GameState oldState, GameState newState)
+        {
+            if (newState == GameState.Credits) audioSource.DOFade(0, .3f).SetUpdate(true);
+            if (oldState == GameState.Credits) audioSource.DOFade(1, .3f).SetUpdate(true);
         }
 
         private void Update()

@@ -206,6 +206,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5239255589636586365, guid: eb8a02e218c0736468c85cbf6b90ace9, type: 3}
+      propertyPath: closeOnExit
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7540086827866498019, guid: eb8a02e218c0736468c85cbf6b90ace9, type: 3}
       propertyPath: m_Name
       value: Credits Canvas
@@ -2490,6 +2494,7 @@ MonoBehaviour:
   musicSlider: {fileID: 933578276}
   sfxSoundOnSliderChange: {fileID: 8300000, guid: e15d9279e957e484fb60168637fb8d6c, type: 3}
   creditsUI: {fileID: 68783322}
+  musicSource: {fileID: 466851457}
 --- !u!1 &1927280838
 GameObject:
   m_ObjectHideFlags: 0

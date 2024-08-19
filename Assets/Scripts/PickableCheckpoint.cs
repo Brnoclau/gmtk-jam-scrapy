@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Scrapy.Player;
+using UnityEngine;
 
 namespace Scrapy
 {
@@ -6,6 +7,7 @@ namespace Scrapy
     public class PickableCheckpoint : MonoBehaviour
     {
         [SerializeField] protected string checkpointName;
+        [SerializeField] protected bool disableSound;
         
         private void Start()
         {
@@ -29,6 +31,7 @@ namespace Scrapy
         {
             QuestManager.Instance.CompleteCheckpoint(checkpointName);
             AnimateDestroy();
+            if (!disableSound) SfxManager.Instance.Play(GlobalConfig.Instance.audio.itemPickupClip);
         }
 
         protected virtual void AnimateDestroy()

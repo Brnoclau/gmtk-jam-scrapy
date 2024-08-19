@@ -20,3 +20,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 45339ed8d7fa8e34fb0afba39c7cce27, type: 2}
   - {fileID: 11400000, guid: 5ec4dcf3423d5bb40aa66bd26413cf8d, type: 2}
   - {fileID: 11400000, guid: 306513a35758c9f489b10f719369f504, type: 2}
+  audio:
+    itemPickupClip: {fileID: 8300000, guid: 1e345854939a3dd4aaaa162eb15e5e7a, type: 3}
+    questComplete: {fileID: 8300000, guid: 1cb38c372712a444dbf8840b95cefb54, type: 3}
+    buttonClick: {fileID: 8300000, guid: 8672b7801eb90ef4698b72820354946a, type: 3}
+    openMap: {fileID: 8300000, guid: 974d53f417ad9794a831f2006ed5188d, type: 3}
+    enterWorkshop: {fileID: 8300000, guid: 14c56a58ddb249449810c2161b6d58e3, type: 3}
+    exitWorkshopOrRespawn: {fileID: 8300000, guid: ac1b219247cca024e979f918414562a8, type: 3}
+    placedComponent: {fileID: 8300000, guid: b49decc6c48750b49908018ecdd1f26d, type: 3}
+    deletedComponent: {fileID: 8300000, guid: edea1d3a1fdc94b409bbc435ec20f6bd, type: 3}
+    failedToPlaceComponent: {fileID: 8300000, guid: f0c780f4933f3b24494422bfc1b21500, type: 3}

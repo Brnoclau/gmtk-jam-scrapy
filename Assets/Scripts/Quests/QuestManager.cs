@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Scrapy.Player;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -85,6 +86,7 @@ namespace Scrapy
         {
             quest.complete = true;
             QuestCompleted?.Invoke(quest);
+            SfxManager.Instance.Play(GlobalConfig.Instance.audio.questComplete);
         }
     }
 }

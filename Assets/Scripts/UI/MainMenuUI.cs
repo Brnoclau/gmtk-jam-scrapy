@@ -1,4 +1,5 @@
 ﻿using System;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -18,6 +19,7 @@ namespace Scrapy.UI
         [SerializeField] private AudioClip sfxSoundOnSliderChange;
 
         [SerializeField] private CreditsUI creditsUI;
+        [SerializeField] private AudioSource musicSource;
 
         private void Awake()
         {
@@ -27,7 +29,9 @@ namespace Scrapy.UI
             continueButton.onClick.AddListener(ContinueGame);
             creditsButton.onClick.AddListener(ShowCredits);
             exitToDesktopButton.onClick.AddListener(Application.Quit);
+            creditsUI.FinishedCredits += CreditsUIOnFinishedCredits;
         }
+
 
         private void Start()
         {
@@ -71,6 +75,12 @@ namespace Scrapy.UI
         private void ShowCredits()
         {
             creditsUI.ShowCredits();
+            musicSource.DOFade(0, 0.5f).SetUpdate(true);
+        }
+        
+        private void CreditsUIOnFinishedCredits()
+        {
+            musicSource.DOFade(1, 0.5f).SetUpdate(true);
         }
     }
 }

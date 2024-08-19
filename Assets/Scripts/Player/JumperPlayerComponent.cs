@@ -11,11 +11,13 @@ namespace Scrapy.Player
         [SerializeField] private SpriteRenderer sprite;
         [SerializeField] private Transform springFromPoint;
         [SerializeField] private float springScaleMulti = 1;
-        [SerializeField] private  JumperBit jumpBit;
+        [SerializeField] private JumperBit jumpBit;
 
         private float _jumperLastUsedAt = -10;
         
         private Rigidbody2D _rb;
+
+        public event Action Used;
 
         private void Awake()
         {
@@ -63,12 +65,12 @@ namespace Scrapy.Player
 
         private void Use()
         {
-            Debug.Log("Use");
             jumpBit.RegisterCollisions = true;
             jumpBit.transform.DOPunchPosition(Vector3.down * Config.usedDistance, Config.retractAfter)
                 .OnComplete(() => jumpBit.RegisterCollisions = false);
             // jumpBit.DOPunchPosition(Vector3.down * Config.usedDistance, Config.retractAfter);
             _jumperLastUsedAt = Time.time;
+            Used?.Invoke();
         }
     }
 }

@@ -148,6 +148,7 @@ namespace Scrapy
                     _player.transform.position.x > levelTopRight.position.x)
                 {
                     RespawnPlayer();
+                    SfxManager.Instance.Play(GlobalConfig.Instance.audio.exitWorkshopOrRespawn, 0.1f);
                 }
             }
         }
@@ -203,13 +204,17 @@ namespace Scrapy
                 RespawnPlayer();
                 _player.transform.position = workshop.PlayerHoldPosition;
                 FreezePlayer();
+                SfxManager.Instance.Play(GlobalConfig.Instance.audio.enterWorkshop, 0.1f);
             }
             else if (_state == GameState.Workshop && newState == GameState.Playing)
             {
                 var workshop = CurrentWorkshopArea;
                 RespawnPlayer();
+                SfxManager.Instance.Play(GlobalConfig.Instance.audio.exitWorkshopOrRespawn, 0.1f);
                 if (workshop != null)
+                {
                     _player.transform.position = workshop.PlayerHoldPosition;
+                }
             }
             else if (newState == GameState.Credits)
             {
@@ -235,7 +240,7 @@ namespace Scrapy
                 () => cinemachineCamera.Lens.OrthographicSize,
                 value => cinemachineCamera.Lens.OrthographicSize = value,
                 newZoom, changeZoomTime).SetEase(changeZoomEase).SetTarget(cinemachineCamera);
-                
+
             var oldValue = _state;
             _state = newState;
             StateChanged?.Invoke(oldValue, _state);
@@ -265,7 +270,8 @@ namespace Scrapy
 
         private void OnFinishedCredits()
         {
-            State = GameState.Playing;
+            // State = GameState.Playing;
+            SceneLoadingManager.Instance.LoadScene("Main Menu");
         }
 
         public void FreezePlayer()

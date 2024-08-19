@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using DG.Tweening;
+using Scrapy.Player;
 using UnityEngine;
 
 namespace Scrapy.UI
@@ -60,6 +61,7 @@ namespace Scrapy.UI
             if (Input.GetKeyDown(KeyCode.Tab))
             {
                 SetOpen(true);
+                SfxManager.Instance.Play(GlobalConfig.Instance.audio.openMap, 0.5f);
             }
 
             if (Input.GetKeyUp(KeyCode.Tab))

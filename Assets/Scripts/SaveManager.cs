@@ -21,7 +21,8 @@ namespace Scrapy
             }
 
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            if (transform.parent) DontDestroyOnLoad(transform.parent.gameObject);
+            else DontDestroyOnLoad(gameObject);
         }
 
         public void ResetSave()

@@ -130,6 +130,10 @@ namespace Scrapy.UI.Workshop
                 UpdateComponentUIState(ui, component);
                 ui.button.onClick.RemoveAllListeners();
                 ui.button.onClick.AddListener(() => _workshopController.SetAddingComponent(component.componentConfig));
+                if (ui.button.TryGetComponent(out ButtonAudio buttonAudio))
+                {
+                    buttonAudio.ApplyListener();
+                }
             }
         }
 

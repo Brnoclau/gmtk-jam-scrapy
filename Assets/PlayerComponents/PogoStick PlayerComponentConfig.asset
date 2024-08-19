@@ -15,7 +15,7 @@ MonoBehaviour:
   key: pogo-stick
   type: 3
   prefab: {fileID: 1349921712728584797, guid: 9c0f74f828198a94a844b28ddcb38170, type: 3}
-  uiImage: {fileID: -1866526378561764958, guid: b4e82c34340a97149b871810b48f1344, type: 3}
+  uiImage: {fileID: 5061316173857063830, guid: d45ec9cd6cb004d41b16073bc7fa9e9d, type: 3}
   uiName: Pogo stick
   wheelSpeed: 180
   wheelMaxTorque: 100

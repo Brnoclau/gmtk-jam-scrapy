@@ -141,10 +141,16 @@ namespace Scrapy
         private void Update()
         {
             if (!Active) return;
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                GameManager.Instance.State = GameState.Playing;
+                return;
+            } 
             switch (Mode)
             {
                 case WorkshopMode.Selection:
                     UpdateHoverAndSelection();
+                    if (Input.GetKeyDown(KeyCode.Delete)) DeleteSelectedComponent();
                     break;
                 case WorkshopMode.Adding:
                     UpdateAdding();
@@ -155,6 +161,7 @@ namespace Scrapy
         public void DeleteSelectedComponent()
         {
             GameManager.Instance.Player.RemoveAttachedComponent(SelectedComponent);
+            SfxManager.Instance.Play(GlobalConfig.Instance.audio.deletedComponent, 0.2f);
             UpdateAvailableComponents();
             AvailableComponentsChanged?.Invoke();
             SelectedComponent = null;
@@ -250,11 +257,12 @@ namespace Scrapy
             {
                 if (!CanPlaceComponent)
                 {
-                    // TODO play an error sound 
+                    SfxManager.Instance.Play(GlobalConfig.Instance.audio.failedToPlaceComponent, 0.1f);
                     return;
                 }
 
                 PlaceComponent();
+                SfxManager.Instance.Play(GlobalConfig.Instance.audio.placedComponent, 0.05f);
             }
         }
 

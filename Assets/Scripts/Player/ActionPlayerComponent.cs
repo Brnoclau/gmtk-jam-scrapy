@@ -36,8 +36,6 @@ namespace Scrapy.Player
         protected virtual void Start()
         {
             _charge = Config.chargeSec;
-            Debug.Log("Hotkey " + Hotkey);
-            ActiveChanged += (val) => Debug.Log("Active " + val);
         }
 
         protected virtual void Update()

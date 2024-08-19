@@ -25,6 +25,8 @@ namespace Scrapy.Player
         private bool _thrusterFinishedDuringThisInput;
         private float _currentWheelsSpeed;
         private float _thrusterLastUsedTime;
+        
+        public IReadOnlyList<WheelJoint2D> Wheels => _wheelJoints;
 
         private void Awake()
         {
@@ -70,7 +72,7 @@ namespace Scrapy.Player
         private void ApplyRotation()
         {
             // if (_wheelJoints.Count > 0) return;
-            var direction = Input.GetAxis("Horizontal");
+            var direction = Input.GetAxis("Horizontal") * (_wheelJoints.Count > 0 ? 1f : -1f);
             // if ((direction > 0 && _rb.angularVelocity > _maxBodyAngularSpeed) ||
             //     (direction < 0 && _rb.angularVelocity < -_maxBodyAngularSpeed))
             // {
@@ -204,17 +206,18 @@ namespace Scrapy.Player
                 case PlayerComponentType.Body:
                     break;
                 case PlayerComponentType.Wheel:
-                    var rb = component.GetComponent<Rigidbody2D>();
-                    if (rb == null)
-                    {
-                        Debug.LogError(
-                            $"Tried to assemble wheel component but prefab {config.prefab.name} doesn't have a rigidbody");
-                        break;
-                    }
 
                     if (componentClass is not WheelPlayerComponent wheelPlayerComponent)
                     {
                         Debug.LogError("Wheel component doesn't have WheelPlayerComponent");
+                        break;
+                    }
+                    
+                    var rb = wheelPlayerComponent.rigidbody;
+                    if (rb == null)
+                    {
+                        Debug.LogError(
+                            $"Tried to assemble wheel component but prefab {config.prefab.name} doesn't have a rigidbody");
                         break;
                     }
 
