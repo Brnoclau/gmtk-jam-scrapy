@@ -38,6 +38,7 @@ namespace Scrapy.Player
 
         private void FixedUpdate()
         {
+            
             if (IsActive && _jumperLastUsedAt + Config.jumperCooldown < Time.time)
             {
                 Use();

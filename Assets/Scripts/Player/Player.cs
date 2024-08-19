@@ -70,7 +70,7 @@ namespace Scrapy.Player
         private void ApplyRotation()
         {
             // if (_wheelJoints.Count > 0) return;
-            var direction = -Input.GetAxis("Horizontal");
+            var direction = Input.GetAxis("Horizontal");
             // if ((direction > 0 && _rb.angularVelocity > _maxBodyAngularSpeed) ||
             //     (direction < 0 && _rb.angularVelocity < -_maxBodyAngularSpeed))
             // {
