@@ -15,13 +15,22 @@ namespace Scrapy
         {
             if (Instance != null)
             {
-                Debug.LogError("There should only be one SaveManager in the scene");
+                Debug.LogWarning("Removing extra SaveManager");
                 Destroy(gameObject);
                 return;
             }
 
             Instance = this;
             DontDestroyOnLoad(gameObject);
+        }
+
+        public void ResetSave()
+        {
+            var savePath = GetSavePath();
+            if (File.Exists(savePath))
+            {
+                File.Delete(savePath);
+            }
         }
 
         public void SaveGame()
@@ -60,6 +69,12 @@ namespace Scrapy
             }
 
             Debug.Log("Successfully saved the game");
+        }
+
+        public bool SaveFileExists()
+        {
+            var savePath = GetSavePath();
+            return File.Exists(savePath);
         }
 
         public SaveFile LoadGame()

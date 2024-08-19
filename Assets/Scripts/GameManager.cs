@@ -103,7 +103,7 @@ namespace Scrapy
         {
             if (Instance != null)
             {
-                Debug.LogError("There should only be one GameManager in the scene");
+                Debug.LogWarning("Removing extra GameManager");
                 Destroy(gameObject);
                 return;
             }
@@ -116,22 +116,26 @@ namespace Scrapy
             LoadGame();
             RespawnPlayer();
             SetState(GameState.Playing);
+            IsGamePaused = false;
+        }
+
+        private void OnDestroy()
+        {
+            Time.timeScale = 1;
         }
 
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.R) ||
-                _player.transform.position.y < levelBottomLeft.position.y ||
-                _player.transform.position.x < levelBottomLeft.position.x ||
-                _player.transform.position.y > levelTopRight.position.y ||
-                _player.transform.position.x > levelTopRight.position.x)
-            {
-                RespawnPlayer();
-            }
-
             if (State == GameState.Playing)
             {
-                
+                if (Input.GetKeyDown(KeyCode.R) ||
+                    _player.transform.position.y < levelBottomLeft.position.y ||
+                    _player.transform.position.x < levelBottomLeft.position.x ||
+                    _player.transform.position.y > levelTopRight.position.y ||
+                    _player.transform.position.x > levelTopRight.position.x)
+                {
+                    RespawnPlayer();
+                }
             }
         }
 

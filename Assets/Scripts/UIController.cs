@@ -2,6 +2,7 @@
 using Scrapy.UI;
 using Scrapy.UI.Workshop;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Scrapy
@@ -17,7 +18,9 @@ namespace Scrapy
 
         [Header("Pause UI")] [SerializeField] private Button resumeButton;
         [SerializeField] private Button saveButton;
+        [SerializeField] private Button toMainMenuButton;
         [SerializeField] private Button exitGameButton;
+        [SerializeField] private string mainMenuSceneName;
 
         private void Awake()
         {
@@ -34,7 +37,13 @@ namespace Scrapy
 
             resumeButton.onClick.AddListener(() => GameManager.Instance.IsGamePaused = false);
             saveButton.onClick.AddListener(() => SaveManager.Instance.SaveGame());
+            toMainMenuButton.onClick.AddListener(ToMainMenu);
             exitGameButton.onClick.AddListener(() => GameManager.Instance.ExitGame());
+            
+            if (Application.platform == RuntimePlatform.WebGLPlayer)
+            {
+                exitGameButton.gameObject.SetActive(false);
+            }
         }
 
         private void Update()
@@ -43,6 +52,12 @@ namespace Scrapy
             {
                 GameManager.Instance.IsGamePaused = !GameManager.Instance.IsGamePaused;
             }
+        }
+
+        private void ToMainMenu()
+        {
+            SaveManager.Instance.SaveGame();
+            SceneLoadingManager.Instance.LoadScene(mainMenuSceneName);
         }
 
         void OnPausedChanged(bool isGamePaused)

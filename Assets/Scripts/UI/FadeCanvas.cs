@@ -10,6 +10,9 @@ namespace Scrapy.UI
         [SerializeField] private float openFadeDuration = .3f;
         [SerializeField] private float closeFadeDuration = .3f;
 
+        public float OpenFadeDuration => openFadeDuration;
+        public float CloseFadeDuration => closeFadeDuration;
+
         private Canvas _canvas;
         private CanvasGroup _canvasGroup;
 
@@ -34,11 +37,12 @@ namespace Scrapy.UI
             if (value)
             {
                 _canvas.enabled = true;
-                _tween = _canvasGroup.DOFade(1, closeFadeDuration);
+                _tween = _canvasGroup.DOFade(1, closeFadeDuration).SetUpdate(true);
             }
             else
             {
-                _tween = _canvasGroup.DOFade(0, closeFadeDuration).OnComplete(() => _canvas.enabled = false);
+                _tween = _canvasGroup.DOFade(0, closeFadeDuration).SetUpdate(true)
+                    .OnComplete(() => _canvas.enabled = false);
             }
         }
     }
