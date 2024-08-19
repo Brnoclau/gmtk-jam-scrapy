@@ -10,30 +10,40 @@ namespace Scrapy.Player
 
         private void Start()
         {
+            WheelJoint2D.useMotor = false;
         }
 
         private void FixedUpdate()
         {
             if (GameManager.Instance.State != GameState.Playing)
             {
-                if (WheelJoint2D.motor.motorSpeed != 0)
-                {
-                    WheelJoint2D.motor = new JointMotor2D()
-                    {
-                        motorSpeed = 0,
-                        maxMotorTorque = Config.wheelMaxTorque
-                    };
-                }
+                // if (WheelJoint2D.motor.motorSpeed != 0)
+                // {
+                //     WheelJoint2D.motor = new JointMotor2D()
+                //     {
+                //         motorSpeed = 0,
+                //         maxMotorTorque = Config.wheelMaxTorque
+                //     };
+                // }
 
                 return;
             }
+            
+            var direction = -Input.GetAxis("Horizontal");
 
-            var horizontalInput = Input.GetAxis("Horizontal");
-            WheelJoint2D.motor = new JointMotor2D()
+            if ((direction > 0 && WheelJoint2D.jointSpeed > Config.wheelSpeed) ||
+                (direction < 0 && WheelJoint2D.jointSpeed < -Config.wheelSpeed))
             {
-                motorSpeed = -Config.wheelSpeed * horizontalInput,
-                maxMotorTorque = Config.wheelMaxTorque
-            };
+                // don't apply torque to the same direction if already
+                return;
+            }
+            
+            WheelJoint2D.connectedBody.AddTorque(direction * Config.wheelMaxTorque);
+            // WheelJoint2D.motor = new JointMotor2D()
+            // {
+            //     motorSpeed = -Config.wheelSpeed * horizontalInput,
+            //     maxMotorTorque = Config.wheelMaxTorque
+            // };
         }
     }
 }
