@@ -273,7 +273,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   creditsUI: {fileID: 0}
-  playingCameraZoom: 5
+  playingCameraZoom: 6
   workshopCameraZoom: 3.5
   dialogCameraZoom: 3
   changeZoomTime: 1
