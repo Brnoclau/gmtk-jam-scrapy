@@ -241,23 +241,6 @@ namespace Scrapy.Player
                 actionPlayerComponent.Hotkey = hotkey;
             }
 
-            if (componentClass is JumperPlayerComponent jumperPlayerComponent)
-            {
-                var slider = gameObject.AddComponent<SliderJoint2D>();
-                slider.anchor = position;
-                slider.connectedBody = jumperPlayerComponent.jumpBit;
-                slider.motor = new JointMotor2D()
-                {
-                    motorSpeed = config.jumperMotorSpeed,
-                    maxMotorTorque = config.jumperMotorForce
-                };
-                slider.useMotor = true;
-                jumperPlayerComponent.Slider = slider;
-                attachedComponent.SliderJoint = slider;
-                // jumperPlayerComponent.JumpBit.connectedBody = _rb;
-                // jumperPlayerComponent.JumpBit.connectedAnchor = position;
-            }
-
             _attachedComponents.Add(attachedComponent);
         }
 
@@ -287,11 +270,6 @@ namespace Scrapy.Player
             {
                 _wheelJoints.Remove(attachedComponent.WheelJoint);
                 Destroy(attachedComponent.WheelJoint);
-            }
-
-            if (attachedComponent.SliderJoint != null)
-            {
-                Destroy(attachedComponent.SliderJoint);
             }
 
             _attachedComponents.Remove(attachedComponent);
@@ -326,7 +304,6 @@ namespace Scrapy.Player
         public float rotation;
 
         public WheelJoint2D WheelJoint; // only for wheels
-        public SliderJoint2D SliderJoint; // only for wheels
     }
 
     [Serializable]

@@ -49,13 +49,10 @@ namespace Scrapy.Player
         
         [Header("Jumper settings")] 
         public float jumperCooldown;
-        public float restDistance;
         public float usedDistance;
-        public float jumperMotorSpeed;
-        public float jumperMotorForce;
         public float retractAfter;
-        public float retractTime;
-        public float bounciness;
+        public float jumperImpulseAtPoint;
+        public float jumperRelativeImpulse;
     }
 
     public enum ActionMode

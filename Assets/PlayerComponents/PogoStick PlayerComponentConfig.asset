@@ -35,10 +35,8 @@ MonoBehaviour:
   activationCooldown: 0
   thrusterForceAtPoint: 0
   thrusterRelativeForce: 0
-  jumperCooldown: 0.5
-  restDistance: 0.2
-  usedDistance: 0.5
-  jumperMotorSpeed: 100
-  jumperMotorForce: 10000
-  retractAfter: 0.1
-  retractTime: 0.1
+  jumperCooldown: 0.8
+  usedDistance: 1.38
+  retractAfter: 0.29
+  jumperImpulseAtPoint: 200
+  jumperRelativeImpulse: 200

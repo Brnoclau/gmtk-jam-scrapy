@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using DG.Tweening;
+using Scrapy.Util;
 using UnityEngine;
 
 namespace Scrapy.Player
@@ -10,25 +11,29 @@ namespace Scrapy.Player
         [SerializeField] private SpriteRenderer sprite;
         [SerializeField] private Transform springFromPoint;
         [SerializeField] private float springScaleMulti = 1;
-        public Rigidbody2D jumpBit;
-
-        [NonSerialized] public SliderJoint2D Slider;
+        [SerializeField] private  JumperBit jumpBit;
 
         private float _jumperLastUsedAt = -10;
+        
+        private Rigidbody2D _rb;
 
-        protected override void Start()
+        private void Awake()
         {
-            base.Start();
-            Slider.limits = new JointTranslationLimits2D()
-            {
-                min = Slider.limits.min,
-                max = Config.restDistance
-            };
-            jumpBit.sharedMaterial = new PhysicsMaterial2D()
-            {
-                bounciness = 0,
-                friction = jumpBit.sharedMaterial.friction
-            };
+            jumpBit.Collided += JumpBitOnCollided;
+            var player = GetComponentInParent<Player>();
+            _rb = player.GetComponent<Rigidbody2D>();
+        }
+
+        private void JumpBitOnCollided()
+        {
+            jumpBit.RegisterCollisions = false;
+            
+            _rb.AddForceAtPosition(transform.up.XY() * Config.jumperImpulseAtPoint, jumpBit.transform.position, ForceMode2D.Impulse);
+            Debug.DrawLine(jumpBit.transform.position, jumpBit.transform.position + transform.up, Color.red, 3.0f);
+            var localRotation = transform.localRotation.eulerAngles.z;
+            _rb.AddRelativeForce(Quaternion.Euler(0, 0, localRotation) * Vector3.up * Config.jumperRelativeImpulse, ForceMode2D.Impulse);
+            
+            Debug.DrawLine(_rb.transform.position, _rb.transform.position + Quaternion.Euler(0, 0, localRotation) * Vector3.up * Config.jumperRelativeImpulse, Color.blue, 3.0f);
         }
 
         private void FixedUpdate()
@@ -57,45 +62,12 @@ namespace Scrapy.Player
 
         private void Use()
         {
-            StartCoroutine(UseCoroutine());
+            Debug.Log("Use");
+            jumpBit.RegisterCollisions = true;
+            jumpBit.transform.DOPunchPosition(Vector3.down * Config.usedDistance, Config.retractAfter)
+                .OnComplete(() => jumpBit.RegisterCollisions = false);
             // jumpBit.DOPunchPosition(Vector3.down * Config.usedDistance, Config.retractAfter);
-            // _jumperLastUsedAt = Time.time;
-        }
-
-        IEnumerator UseCoroutine()
-        {
-            Debug.Log("Activating jumper");
             _jumperLastUsedAt = Time.time;
-            Slider.limits = new JointTranslationLimits2D()
-            {
-                min = Slider.limits.min,
-                max = Config.usedDistance
-            };
-            jumpBit.sharedMaterial = new PhysicsMaterial2D()
-            {
-                bounciness = Config.bounciness,
-                friction = jumpBit.sharedMaterial.friction
-            };
-            yield return new WaitForSeconds(Config.retractAfter);
-            jumpBit.sharedMaterial = new PhysicsMaterial2D()
-            {
-                bounciness = 0,
-                friction = jumpBit.sharedMaterial.friction
-            };
-            DOTween.To(() => Slider.limits.max, (val) =>
-                {
-                    Slider.limits = new JointTranslationLimits2D()
-                    {
-                        min = Slider.limits.min,
-                        max = val
-                    };
-                },
-                Config.restDistance, Config.retractTime);
-            // Slider.limits = new JointTranslationLimits2D()
-            // {
-            // min = Slider.limits.min,
-            // max = Config.restDistance
-            // };
         }
     }
 }

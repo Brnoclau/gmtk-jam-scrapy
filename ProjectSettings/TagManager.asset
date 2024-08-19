@@ -19,7 +19,7 @@ TagManager:
   - PlayerWheel
   - PlayerBody
   - PlayerNoCollisionComponent
-  - 
+  - PlayerJumperBit
   - 
   - 
   - 
