@@ -87,8 +87,8 @@ MonoBehaviour:
   cantPlaceColor: {r: 1, g: 0.23113209, b: 0.23113209, a: 1}
   canPlaceColor: {r: 0.3658053, g: 1, b: 0.23113209, a: 1}
   placementAreaSprite: {fileID: 2213050838512795802}
-  placementAreaCenter: {x: 0, y: 1.5}
-  placementAreaSize: {x: 5, y: 3}
+  placementAreaCenter: {x: 0, y: 2}
+  placementAreaSize: {x: 6, y: 4}
   rotateMaxSpeed: 90
   rotateFullSpeedTime: 1
 --- !u!1 &6098586322727286776
