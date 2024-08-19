@@ -57,7 +57,7 @@ namespace Scrapy.Player
             if (GameManager.Instance.State != GameState.Playing) return;
             
             MoveBodyIfNoWheelsAttached();
-            UpdateThruster();
+            // UpdateThruster();
 
             if (GameManager.Instance.NearbyInteractable != null)
             {
@@ -118,6 +118,11 @@ namespace Scrapy.Player
                     rotation = attachedComponent.rotation
                 };
 
+                if (attachedComponent.component is ActionPlayerComponent actionPlayerComponent)
+                {
+                    save.hotkey = actionPlayerComponent.Hotkey;
+                }
+
                 savedComponents.Add(save);
             }
 
@@ -155,12 +160,12 @@ namespace Scrapy.Player
                     parent = parentObject.component as BodyPlayerComponent;
                 }
 
-                AttachNewComponent(config, save.position, save.rotation, parent);
+                AttachNewComponent(config, save.position, save.rotation, parent, save.hotkey);
             }
         }
 
         public void AttachNewComponent(PlayerComponentConfig config, Vector2 position, float rotation,
-            BodyPlayerComponent parent)
+            BodyPlayerComponent parent, ActionHotkey hotkey)
         {
             if (parent != null)
             {
@@ -233,6 +238,12 @@ namespace Scrapy.Player
                     break;
             }
 
+
+            if (componentClass is ActionPlayerComponent actionPlayerComponent)
+            {
+                actionPlayerComponent.Hotkey = hotkey;
+            }
+
             _attachedComponents.Add(attachedComponent);
         }
 
@@ -266,6 +277,24 @@ namespace Scrapy.Player
 
             _attachedComponents.Remove(attachedComponent);
             Destroy(component.gameObject);
+        }
+
+        public void SetComponentHotkey(PlayerComponent component, ActionHotkey hotkey)
+        {
+            var attachedComponent = _attachedComponents.FirstOrDefault(x => x.component == component);
+            if (attachedComponent == null)
+            {
+                Debug.LogError("Tried to set hotkey to component which is not on the player");
+                return;
+            }
+
+            if (component is not ActionPlayerComponent actionPlayerComponent)
+            {
+                Debug.LogError("Tried to set hotkey to non-action component");
+                return;
+            }
+
+            actionPlayerComponent.Hotkey = hotkey;
         }
 
         void UpdateThruster()
@@ -335,5 +364,6 @@ namespace Scrapy.Player
         public int parentId;
         public Vector2 position;
         public float rotation;
+        public ActionHotkey hotkey;
     }
 }

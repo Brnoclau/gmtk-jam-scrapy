@@ -78,7 +78,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerComponentsLayerMask:
     serializedVersion: 2
-    m_Bits: 6144
+    m_Bits: 14336
   playerOnlyBodyLayerMask:
     serializedVersion: 2
     m_Bits: 4096
@@ -276,6 +276,8 @@ MonoBehaviour:
   playingCameraZoom: 5
   workshopCameraZoom: 3.5
   dialogCameraZoom: 3
+  changeZoomTime: 1
+  changeZoomEase: 6
 --- !u!1 &8250582789845848747
 GameObject:
   m_ObjectHideFlags: 0

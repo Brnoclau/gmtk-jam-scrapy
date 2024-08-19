@@ -141,7 +141,7 @@ namespace Scrapy
         {
             if (State == GameState.Playing)
             {
-                if (Input.GetKeyDown(KeyCode.R) ||
+                if (Input.GetKeyDown(KeyCode.G) ||
                     _player.transform.position.y < levelBottomLeft.position.y ||
                     _player.transform.position.x < levelBottomLeft.position.x ||
                     _player.transform.position.y > levelTopRight.position.y ||

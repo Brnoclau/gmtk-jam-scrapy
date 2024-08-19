@@ -160,6 +160,11 @@ namespace Scrapy
             SelectedComponent = null;
         }
 
+        public void SetSelectedComponentHotkey(ActionHotkey hotkey)
+        {
+            
+        }
+
         private void UpdateHoverAndSelection()
         {
             if (EventSystem.current.IsPointerOverGameObject())
@@ -404,7 +409,7 @@ namespace Scrapy
             GameManager.Instance.Player.AttachNewComponent(AddingComponent.componentConfig,
                 AddingComponentObject.transform.position.XY() - targetTransform.position.XY(),
                 AddingComponentObject.transform.rotation.eulerAngles.z - targetTransform.rotation.eulerAngles.z,
-                AttachmentParent);
+                AttachmentParent, ActionHotkey.Q);
 
             GameManager.Instance.FreezePlayer();
 

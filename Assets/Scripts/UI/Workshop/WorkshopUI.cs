@@ -16,15 +16,19 @@ namespace Scrapy.UI.Workshop
         [SerializeField] private RectTransform componentsContainer;
         [SerializeField] private ComponentUI componentPrefab;
         [SerializeField] private TMP_Text placementErrorText;
-        [Header("Selected object actions")]
-        [SerializeField] private RectTransform selectedObjectActionsUI;
+
+        [Header("Selected object actions")] [SerializeField]
+        private RectTransform selectedObjectActionsUI;
+
         [SerializeField] private TMP_Text selectedComponentNameText;
         [SerializeField] private Button deleteComponentButton;
+        [SerializeField] private RectTransform hotkeyContainer;
+        [SerializeField] private TMP_Dropdown hotkeyDropdown;
 
         private Canvas _canvas;
         private WorkshopController _workshopController;
         private readonly List<ComponentUI> _componentUIs = new();
-        
+
         private ComponentUI _selectedUI;
 
         private void Awake()
@@ -40,6 +44,9 @@ namespace Scrapy.UI.Workshop
             deleteComponentButton.onClick.AddListener(OnDeleteComponentClicked);
             OnSelectedComponentChanged(_workshopController.SelectedComponent);
             placementErrorText.text = "";
+            hotkeyDropdown.ClearOptions();
+            hotkeyDropdown.AddOptions(new List<string> { "Q", "E", "R", "1", "2", "3", "4", "5" });
+            hotkeyDropdown.onValueChanged.AddListener(OnDropdownHotkeyChanged);
         }
 
         private void OnAvailableComponentsChanged()
@@ -71,6 +78,15 @@ namespace Scrapy.UI.Workshop
             if (newSelectedObject != null)
             {
                 selectedComponentNameText.text = newSelectedObject.Config.uiName;
+                if (newSelectedObject is ActionPlayerComponent actionPlayerComponent)
+                {
+                    hotkeyContainer.gameObject.SetActive(true);
+                    hotkeyDropdown.value = (int)actionPlayerComponent.Hotkey;
+                }
+                else
+                {
+                    hotkeyContainer.gameObject.SetActive(false);
+                }
             }
         }
 
@@ -81,6 +97,7 @@ namespace Scrapy.UI.Workshop
             {
                 Debug.LogError("Placed component doesn't have a UI in the workshop for some reason!");
             }
+
             UpdateComponentUIState(ui, component);
         }
 
@@ -100,6 +117,7 @@ namespace Scrapy.UI.Workshop
             {
                 SpawnNewComponentUI();
             }
+
             if (_componentUIs.Count > availableComponents.Count)
             {
                 DeleteComponentUIs(_componentUIs.Count - availableComponents.Count);
@@ -120,11 +138,11 @@ namespace Scrapy.UI.Workshop
             Debug.Log($"Updating component UI: {component.componentConfig.key} {component.count}/{component.maxCount}");
             ui.InitFromConfig(component.componentConfig);
             ui.SetCount(component.count, component.maxCount);
-            
+
             ui.State = component.count > 0
-                ? (component == _workshopController.AddingComponent ? 
-                    ComponentUI.ComponentUIState.Selected : 
-                    ComponentUI.ComponentUIState.Normal)
+                ? (component == _workshopController.AddingComponent
+                    ? ComponentUI.ComponentUIState.Selected
+                    : ComponentUI.ComponentUIState.Normal)
                 : ComponentUI.ComponentUIState.Disabled;
         }
 
@@ -157,6 +175,13 @@ namespace Scrapy.UI.Workshop
             // {
             //     UpdateComponentUIState(_selectedUI, availableComponent);
             // }
+        }
+
+        void OnDropdownHotkeyChanged(int newValue)
+        {
+            if (_workshopController.SelectedComponent == null) return;
+            GameManager.Instance.Player.SetComponentHotkey(_workshopController.SelectedComponent,
+                (ActionHotkey)newValue);
         }
 
         void SpawnNewComponentUI()

@@ -30,6 +30,27 @@ namespace Scrapy.Player
         [Tooltip("How much torque is applied when speed is in the opposite direction or player uses breaks"),Min(0)]
         public float breakTorque;
 
-        // public float breakDamping = 100;
+        [Header("Action mode settings")] 
+        public ActionMode actionMode;
+
+        [Header("Hold/Toggle mode settings")]
+        public bool usesCharge;
+        public float chargeSec;
+        public float chargeReloadPerSec;
+        public float chargeReloadDelay;
+        [Header("Activate mode settings")]
+        public float activeTime;
+        public float activationCooldown;
+
+        [Header("Thruster settings")] 
+        public float thrusterForceAtPoint;
+        public float thrusterRelativeForce;
+    }
+
+    public enum ActionMode
+    {
+        Hold,
+        Toggle,
+        Activate
     }
 }
