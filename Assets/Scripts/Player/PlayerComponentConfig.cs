@@ -7,7 +7,8 @@ namespace Scrapy.Player
     {
         Body,
         Wheel,
-        Thruster
+        Thruster,
+        Jumper
     }
     [CreateAssetMenu(menuName = "Create PlayerComponentConfig", fileName = "PlayerComponentConfig", order = 0)]
     public class PlayerComponentConfig : ScriptableObject
@@ -45,6 +46,16 @@ namespace Scrapy.Player
         [Header("Thruster settings")] 
         public float thrusterForceAtPoint;
         public float thrusterRelativeForce;
+        
+        [Header("Jumper settings")] 
+        public float jumperCooldown;
+        public float restDistance;
+        public float usedDistance;
+        public float jumperMotorSpeed;
+        public float jumperMotorForce;
+        public float retractAfter;
+        public float retractTime;
+        public float bounciness;
     }
 
     public enum ActionMode
