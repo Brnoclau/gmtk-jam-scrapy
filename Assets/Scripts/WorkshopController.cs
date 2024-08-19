@@ -162,7 +162,9 @@ namespace Scrapy
 
         public void SetSelectedComponentHotkey(ActionHotkey hotkey)
         {
-            
+            if (SelectedComponent == null) return;
+            GameManager.Instance.Player.SetComponentHotkey(SelectedComponent,
+                hotkey);
         }
 
         private void UpdateHoverAndSelection()

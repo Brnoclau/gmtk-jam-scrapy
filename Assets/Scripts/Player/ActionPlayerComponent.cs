@@ -127,6 +127,7 @@ namespace Scrapy.Player
             return hotkey switch
             {
                 ActionHotkey.Q => KeyCode.Q,
+                ActionHotkey.W => KeyCode.W,
                 ActionHotkey.E => KeyCode.E,
                 ActionHotkey.R => KeyCode.R,
                 ActionHotkey.Key1 => KeyCode.Alpha1,
@@ -142,6 +143,7 @@ namespace Scrapy.Player
     public enum ActionHotkey
     {
         Q,
+        W,
         E,
         R,
         Key1,

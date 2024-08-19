@@ -45,7 +45,7 @@ namespace Scrapy.UI.Workshop
             OnSelectedComponentChanged(_workshopController.SelectedComponent);
             placementErrorText.text = "";
             hotkeyDropdown.ClearOptions();
-            hotkeyDropdown.AddOptions(new List<string> { "Q", "E", "R", "1", "2", "3", "4", "5" });
+            hotkeyDropdown.AddOptions(new List<string> { "Q", "W", "E", "R", "1", "2", "3", "4", "5" });
             hotkeyDropdown.onValueChanged.AddListener(OnDropdownHotkeyChanged);
         }
 
@@ -179,9 +179,7 @@ namespace Scrapy.UI.Workshop
 
         void OnDropdownHotkeyChanged(int newValue)
         {
-            if (_workshopController.SelectedComponent == null) return;
-            GameManager.Instance.Player.SetComponentHotkey(_workshopController.SelectedComponent,
-                (ActionHotkey)newValue);
+            _workshopController.SetSelectedComponentHotkey((ActionHotkey)newValue);
         }
 
         void SpawnNewComponentUI()
