@@ -173,15 +173,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 920244f41a1ab4346adcd7a6514302ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxBodyTorque: 40
+  _maxBodyTorque: 50
   _maxBodyAngularSpeed: 200
-  _bodyTorqueAcceleration: 3
-  _thrusterParticles: {fileID: 5263464345819948044}
-  _maxThrusterForce: 35
-  _maxThrusterTorque: 35
-  _maxThrusterCharge: 1
-  _thrusterRechargeRelay: 0.5
-  _thrusterRechargePerSecond: 3
+  torqueCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -0.086206466
+      outSlope: -0.086206466
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.08744217
+    - serializedVersion: 3
+      time: 1
+      value: 0.0000012479722
+      inSlope: -2.665812
+      outSlope: -2.665812
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.052479327
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!50 &1312046540762431918
 Rigidbody2D:
   serializedVersion: 5

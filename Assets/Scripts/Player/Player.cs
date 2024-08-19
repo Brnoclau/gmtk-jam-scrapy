@@ -11,9 +11,8 @@ namespace Scrapy.Player
     {
         [SerializeField] private float _maxBodyTorque;
         [SerializeField] private float _maxBodyAngularSpeed;
-        [SerializeField] private float _bodyTorqueAcceleration;
         [Tooltip("Represents how much torque is applied depending on angular speed")]
-        public AnimationCurve torqueCurve;
+        [SerializeField] private AnimationCurve torqueCurve;
         private readonly List<AttachedComponent> _attachedComponents = new();
         public IReadOnlyList<AttachedComponent> AttachedComponents => _attachedComponents;
 
@@ -72,20 +71,24 @@ namespace Scrapy.Player
         {
             // if (_wheelJoints.Count > 0) return;
             var direction = -Input.GetAxis("Horizontal");
-            if ((direction > 0 && _rb.angularVelocity > _maxBodyAngularSpeed) ||
-                (direction < 0 && _rb.angularVelocity < -_maxBodyAngularSpeed))
-            {
+            // if ((direction > 0 && _rb.angularVelocity > _maxBodyAngularSpeed) ||
+            //     (direction < 0 && _rb.angularVelocity < -_maxBodyAngularSpeed))
+            // {
                 // don't apply torque to the same direction if already
-                return;
-            }
+                // return;
+            // }
 
             // if ((direction > 0 && _rb.totalTorque > _maxBodyTorque) ||
             //     (direction < 0 && _rb.totalTorque < -_maxBodyTorque))
             // {
             //     return;
             // }
-
-            _rb.totalTorque = direction * _maxBodyTorque;
+            var absSpeed = Mathf.Abs(_rb.angularVelocity);
+            var speedPosClamped = Mathf.Clamp01(absSpeed / _maxBodyAngularSpeed);
+            var torque = direction * _rb.angularVelocity > 0 ? 
+                _maxBodyTorque * torqueCurve.Evaluate(speedPosClamped) : 
+                _maxBodyTorque; 
+            _rb.AddTorque(direction * torque);
         }
 
         public List<AttachedComponentSave> GetAttachedComponentsSave()
