@@ -25,15 +25,15 @@ namespace Scrapy
         private void Awake()
         {
             GameManager.Instance.StateChanged += OnStateChanged;
-            GameManager.Instance.PlayerEnteredWorkshop += OnPlayerEnteredWorkshop;
-            GameManager.Instance.PlayerExitedWorkshop += OnPlayerExitedWorkshop;
+            // GameManager.Instance.PlayerEnteredWorkshop += OnPlayerEnteredWorkshop;
+            // GameManager.Instance.PlayerExitedWorkshop += OnPlayerExitedWorkshop;
             GameManager.Instance.GamePausedChanged += OnPausedChanged;
 
-            OnPlayerExitedWorkshop();
+            // OnPlayerExitedWorkshop();
             OnPausedChanged(GameManager.Instance.IsGamePaused);
             OnStateChanged(GameManager.Instance.State, GameManager.Instance.State);
 
-            toWorkshopButton.onClick.AddListener(() => GameManager.Instance.State = GameState.Workshop);
+            // toWorkshopButton.onClick.AddListener(() => GameManager.Instance.State = GameState.Workshop);
 
             resumeButton.onClick.AddListener(() => GameManager.Instance.IsGamePaused = false);
             saveButton.onClick.AddListener(() => SaveManager.Instance.SaveGame());
@@ -86,14 +86,14 @@ namespace Scrapy
             gameplayUI.SetOpen(value);
         }
 
-        void OnPlayerEnteredWorkshop()
-        {
-            toWorkshopButton.gameObject.SetActive(true);
-        }
-
-        void OnPlayerExitedWorkshop()
-        {
-            toWorkshopButton.gameObject.SetActive(false);
-        }
+        // void OnPlayerEnteredWorkshop()
+        // {
+        //     toWorkshopButton.gameObject.SetActive(true);
+        // }
+        //
+        // void OnPlayerExitedWorkshop()
+        // {
+        //     toWorkshopButton.gameObject.SetActive(false);
+        // }
     }
 }
