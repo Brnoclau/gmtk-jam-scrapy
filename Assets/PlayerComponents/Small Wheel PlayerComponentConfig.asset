@@ -17,8 +17,8 @@ MonoBehaviour:
   prefab: {fileID: 3217288627225489049, guid: 47acf0302b877d3428cfb51516bbd3fc, type: 3}
   uiImage: {fileID: -7869345368400156953, guid: 11a5fe0dc4efa254883659245fabe2bb, type: 3}
   uiName: Small Wheel
-  wheelSpeed: 2300
-  wheelMaxTorque: 300
+  wheelSpeed: 2500
+  wheelMaxTorque: 280
   torqueCurve:
     serializedVersion: 2
     m_Curve:

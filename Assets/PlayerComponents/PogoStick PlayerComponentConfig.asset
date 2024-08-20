@@ -39,4 +39,4 @@ MonoBehaviour:
   usedDistance: 1.38
   retractAfter: 0.29
   jumperImpulseAtPoint: 500
-  jumperRelativeImpulse: 100
+  jumperRelativeImpulse: 150

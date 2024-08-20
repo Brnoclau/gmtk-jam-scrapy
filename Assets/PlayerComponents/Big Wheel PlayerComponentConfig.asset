@@ -17,7 +17,7 @@ MonoBehaviour:
   prefab: {fileID: 3217288627225489049, guid: 08a2ce2e213eae84e9ea2e9e757e25e7, type: 3}
   uiImage: {fileID: -7869345368400156953, guid: 11a5fe0dc4efa254883659245fabe2bb, type: 3}
   uiName: Big Wheel
-  wheelSpeed: 3000
+  wheelSpeed: 3200
   wheelMaxTorque: 250
   torqueCurve:
     serializedVersion: 2
