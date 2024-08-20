@@ -16,4 +16,27 @@ MonoBehaviour:
   type: 0
   prefab: {fileID: 1349921712728584797, guid: 134b168eb3d287a418f56288fd9b6d6a, type: 3}
   uiImage: {fileID: 1288531495432639844, guid: 11a5fe0dc4efa254883659245fabe2bb, type: 3}
-  uiName: Compressed junk
+  uiName: Compacted Junk
+  wheelSpeed: 180
+  wheelMaxTorque: 100
+  torqueCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  breakTorque: 0
+  actionMode: 0
+  usesCharge: 0
+  chargeSec: 0
+  chargeReloadPerSec: 0
+  chargeReloadDelay: 0
+  activeTime: 0
+  activationCooldown: 0
+  thrusterForceAtPoint: 0
+  thrusterRelativeForce: 0
+  jumperCooldown: 0
+  usedDistance: 0
+  retractAfter: 0
+  jumperImpulseAtPoint: 0
+  jumperRelativeImpulse: 0
