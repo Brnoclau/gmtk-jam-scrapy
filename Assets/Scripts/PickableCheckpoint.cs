@@ -30,6 +30,7 @@ namespace Scrapy
         protected virtual void OnPickup()
         {
             QuestManager.Instance.CompleteCheckpoint(checkpointName);
+            VfxManager.Instance.Play(GlobalConfig.Instance.vfx.itemPickup, transform.position);
             AnimateDestroy();
             if (!disableSound) SfxManager.Instance.Play(GlobalConfig.Instance.audio.itemPickupClip);
         }

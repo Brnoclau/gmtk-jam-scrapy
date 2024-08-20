@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Scrapy.Player
@@ -11,6 +12,7 @@ namespace Scrapy.Player
         public List<PlayerComponentConfig> AllComponents;
         public AudioClips audio;
         public List<ActionHotkey> actionHotkeys;
+        public Vfx vfx;
         
         public static GlobalConfig Instance { get; private set; }
 
@@ -32,5 +34,11 @@ namespace Scrapy.Player
         public AudioClip placedComponent;
         public AudioClip deletedComponent;
         public AudioClip failedToPlaceComponent;
+    }
+
+    [Serializable]
+    public struct Vfx
+    {
+        public ParticleSystem itemPickup;
     }
 }

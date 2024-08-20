@@ -50,3 +50,5 @@ MonoBehaviour:
     name: 4
   - keyCode: 53
     name: 5
+  vfx:
+    itemPickup: {fileID: 2237292544255655967, guid: 950e41d72ea7fa2448583b64c4dc890b, type: 3}
