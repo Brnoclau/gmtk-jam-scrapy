@@ -60,5 +60,10 @@ MonoBehaviour:
   chargeReloadDelay: 0.2
   activeTime: 1
   activationCooldown: 1
-  thrusterForceAtPoint: 0
-  thrusterRelativeForce: 1200
+  thrusterForceAtPoint: 280
+  thrusterRelativeForce: 900
+  jumperCooldown: 0
+  usedDistance: 0
+  retractAfter: 0
+  jumperImpulseAtPoint: 0
+  jumperRelativeImpulse: 0
