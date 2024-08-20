@@ -39,6 +39,5 @@ MonoBehaviour:
     text: Use it to modify your structure. With a couple of wheels, you can scale
       any mountain! Probably...
   - participant: 0
-    text: Use it to modify your structure. With a couple of wheels, you can scale
-      any mountain! Probably...
+    text: Off you go!
   checkpointOnFinish: quest-papa
