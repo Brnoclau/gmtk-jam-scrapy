@@ -26,6 +26,12 @@ namespace Scrapy.Player
             }
         }
 
+        public float Charge => _charge;
+        public float MaxCharge => Config.chargeSec;
+        public bool OnCooldown => Config.actionMode == ActionMode.Activate &&
+                                  _lastUsedAt + Config.activationCooldown > Time.time;
+        public float CooldownProgress => Mathf.Clamp01((Time.time - _lastUsedAt) / Config.activationCooldown);
+
         private bool _isActive;
 
         private Coroutine _activateCoroutine = null;
@@ -42,7 +48,7 @@ namespace Scrapy.Player
         {
             if (Config.actionMode == ActionMode.Activate)
             {
-                if (Input.GetKeyDown(HotkeyToKeycode(Hotkey)))
+                if (Input.GetKeyDown(Hotkey.keyCode))
                 {
                     Activate();
                 }
@@ -50,12 +56,12 @@ namespace Scrapy.Player
 
             if (Config.actionMode == ActionMode.Hold)
             {
-                IsInputActive = Input.GetKey(HotkeyToKeycode(Hotkey));
+                IsInputActive = Input.GetKey(Hotkey.keyCode);
             }
 
             if (Config.actionMode == ActionMode.Toggle)
             {
-                if (Input.GetKeyDown(HotkeyToKeycode(Hotkey)))
+                if (Input.GetKeyDown(Hotkey.keyCode))
                 {
                     IsInputActive = !IsInputActive;
                 }
@@ -120,34 +126,34 @@ namespace Scrapy.Player
             _activateCoroutine = null;
         }
 
-        private static KeyCode HotkeyToKeycode(ActionHotkey hotkey)
-        {
-            return hotkey switch
-            {
-                ActionHotkey.Q => KeyCode.Q,
-                ActionHotkey.W => KeyCode.W,
-                ActionHotkey.E => KeyCode.E,
-                ActionHotkey.R => KeyCode.R,
-                ActionHotkey.Key1 => KeyCode.Alpha1,
-                ActionHotkey.Key2 => KeyCode.Alpha2,
-                ActionHotkey.Key3 => KeyCode.Alpha3,
-                ActionHotkey.Key4 => KeyCode.Alpha4,
-                ActionHotkey.Key5 => KeyCode.Alpha5,
-                _ => throw new Exception("Unsupported action hotkey " + hotkey)
-            };
-        }
+        // private static KeyCode HotkeyToKeycode(ActionHotkey hotkey)
+        // {
+        //     return hotkey switch
+        //     {
+        //         ActionHotkey.Q => KeyCode.Q,
+        //         ActionHotkey.W => KeyCode.W,
+        //         ActionHotkey.E => KeyCode.E,
+        //         ActionHotkey.R => KeyCode.R,
+        //         ActionHotkey.Key1 => KeyCode.Alpha1,
+        //         ActionHotkey.Key2 => KeyCode.Alpha2,
+        //         ActionHotkey.Key3 => KeyCode.Alpha3,
+        //         ActionHotkey.Key4 => KeyCode.Alpha4,
+        //         ActionHotkey.Key5 => KeyCode.Alpha5,
+        //         _ => throw new Exception("Unsupported action hotkey " + hotkey)
+        //     };
+        // }
     }
 
-    public enum ActionHotkey
-    {
-        Q,
-        W,
-        E,
-        R,
-        Key1,
-        Key2,
-        Key3,
-        Key4,
-        Key5
-    }
+    // public enum ActionHotkey
+    // {
+    //     Q,
+    //     W,
+    //     E,
+    //     R,
+    //     Key1,
+    //     Key2,
+    //     Key3,
+    //     Key4,
+    //     Key5
+    // }
 }

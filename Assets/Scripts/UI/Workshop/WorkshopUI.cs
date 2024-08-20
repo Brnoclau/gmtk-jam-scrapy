@@ -9,7 +9,7 @@ using UnityEngine.UI;
 namespace Scrapy.UI.Workshop
 {
     [RequireComponent(typeof(Canvas))]
-    public class WorkshopUI : MonoBehaviour
+    public class WorkshopUI : FadeCanvas
     {
         [SerializeField] private Button playButton;
         [SerializeField] private ScrollRect componentsScrollView;
@@ -31,8 +31,9 @@ namespace Scrapy.UI.Workshop
 
         private ComponentUI _selectedUI;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             _canvas = GetComponent<Canvas>();
             _workshopController = GameManager.Instance.WorkshopController;
             _workshopController.ActiveChanged += OnActiveChanged;
@@ -45,7 +46,7 @@ namespace Scrapy.UI.Workshop
             OnSelectedComponentChanged(_workshopController.SelectedComponent);
             placementErrorText.text = "";
             hotkeyDropdown.ClearOptions();
-            hotkeyDropdown.AddOptions(new List<string> { "Q", "W", "E", "R", "1", "2", "3", "4", "5" });
+            hotkeyDropdown.AddOptions(GlobalConfig.Instance.actionHotkeys.Select(x => x.name).ToList());
             hotkeyDropdown.onValueChanged.AddListener(OnDropdownHotkeyChanged);
         }
 
@@ -81,7 +82,8 @@ namespace Scrapy.UI.Workshop
                 if (newSelectedObject is ActionPlayerComponent actionPlayerComponent)
                 {
                     hotkeyContainer.gameObject.SetActive(true);
-                    hotkeyDropdown.value = (int)actionPlayerComponent.Hotkey;
+                    hotkeyDropdown.value = GlobalConfig.Instance.actionHotkeys
+                        .FindIndex(x => x.keyCode == actionPlayerComponent.Hotkey.keyCode);
                 }
                 else
                 {
@@ -103,7 +105,7 @@ namespace Scrapy.UI.Workshop
 
         private void OnActiveChanged(bool value)
         {
-            _canvas.enabled = value;
+            // _canvas.enabled = value;
             if (value)
             {
                 UpdateAvailableComponents();
@@ -183,7 +185,7 @@ namespace Scrapy.UI.Workshop
 
         void OnDropdownHotkeyChanged(int newValue)
         {
-            _workshopController.SetSelectedComponentHotkey((ActionHotkey)newValue);
+            _workshopController.SetSelectedComponentHotkey(GlobalConfig.Instance.actionHotkeys[newValue]);
         }
 
         void SpawnNewComponentUI()

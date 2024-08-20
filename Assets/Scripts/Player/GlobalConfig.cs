@@ -10,6 +10,7 @@ namespace Scrapy.Player
     {
         public List<PlayerComponentConfig> AllComponents;
         public AudioClips audio;
+        public List<ActionHotkey> actionHotkeys;
         
         public static GlobalConfig Instance { get; private set; }
 

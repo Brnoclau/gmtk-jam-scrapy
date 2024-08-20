@@ -40,6 +40,8 @@ namespace Scrapy
         public event Action PlayerEnteredWorkshop;
         public event Action PlayerExitedWorkshop;
 
+        public event Action<Player.Player> RespawnedPlayer;
+
         public bool IsGamePaused
         {
             get => _isGamePaused;
@@ -286,6 +288,7 @@ namespace Scrapy
             _player.transform.position = GetRespawnPosition();
             _player.LoadFromSaves(SaveManager.Instance.CurrentSave.player.attachedComponents);
             cinemachineCamera.Follow = _player.transform;
+            RespawnedPlayer?.Invoke(_player);
         }
 
         private Vector3 GetRespawnPosition()

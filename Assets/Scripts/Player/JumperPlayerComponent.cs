@@ -23,6 +23,7 @@ namespace Scrapy.Player
         {
             jumpBit.Collided += JumpBitOnCollided;
             var player = GetComponentInParent<Player>();
+            if (player == null) return;
             _rb = player.GetComponent<Rigidbody2D>();
         }
 
@@ -40,6 +41,7 @@ namespace Scrapy.Player
 
         private void FixedUpdate()
         {
+            if (_rb == null) return;
             
             if (IsActive && _jumperLastUsedAt + Config.jumperCooldown < Time.time)
             {

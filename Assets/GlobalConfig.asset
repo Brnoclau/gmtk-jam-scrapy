@@ -31,3 +31,22 @@ MonoBehaviour:
     placedComponent: {fileID: 8300000, guid: b49decc6c48750b49908018ecdd1f26d, type: 3}
     deletedComponent: {fileID: 8300000, guid: edea1d3a1fdc94b409bbc435ec20f6bd, type: 3}
     failedToPlaceComponent: {fileID: 8300000, guid: f0c780f4933f3b24494422bfc1b21500, type: 3}
+  actionHotkeys:
+  - keyCode: 113
+    name: Q
+  - keyCode: 119
+    name: W
+  - keyCode: 101
+    name: E
+  - keyCode: 114
+    name: R
+  - keyCode: 49
+    name: 1
+  - keyCode: 50
+    name: 2
+  - keyCode: 51
+    name: 3
+  - keyCode: 52
+    name: 4
+  - keyCode: 53
+    name: 5

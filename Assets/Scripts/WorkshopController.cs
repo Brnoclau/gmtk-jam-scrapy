@@ -419,7 +419,7 @@ namespace Scrapy
             GameManager.Instance.Player.AttachNewComponent(AddingComponent.componentConfig,
                 AddingComponentObject.transform.position.XY() - targetTransform.position.XY(),
                 AddingComponentObject.transform.rotation.eulerAngles.z - targetTransform.rotation.eulerAngles.z,
-                AttachmentParent, ActionHotkey.Q);
+                AttachmentParent, GlobalConfig.Instance.actionHotkeys[0]);
 
             GameManager.Instance.FreezePlayer();
 

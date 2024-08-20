@@ -11,7 +11,7 @@ namespace Scrapy
     {
         [SerializeField] private WorkshopUI workshopUI;
         [SerializeField] private FadeCanvas gameplayUI;
-        [SerializeField] private GameObject pauseUI;
+        [SerializeField] private FadeCanvas pauseUI;
 
         [Header("GamePlayUI")] [SerializeField]
         private Button toWorkshopButton;
@@ -67,7 +67,7 @@ namespace Scrapy
 
         void OnPausedChanged(bool isGamePaused)
         {
-            pauseUI.gameObject.SetActive(isGamePaused);
+            pauseUI.SetOpen(isGamePaused);
         }
 
         void OnStateChanged(GameState oldState, GameState newState)
@@ -78,7 +78,7 @@ namespace Scrapy
 
         void SetWorkshopUIActive(bool value)
         {
-            workshopUI.gameObject.SetActive(value);
+            workshopUI.SetOpen(value);
         }
 
         void SetGameplayUIActive(bool value)
