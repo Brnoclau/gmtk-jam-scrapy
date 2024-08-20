@@ -53,15 +53,15 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   breakTorque: 0
-  actionMode: 0
-  usesCharge: 1
-  chargeSec: 0.5
-  chargeReloadPerSec: 2
-  chargeReloadDelay: 0.2
+  actionMode: 1
+  usesCharge: 0
+  chargeSec: 0
+  chargeReloadPerSec: 0
+  chargeReloadDelay: 0
   activeTime: 1
   activationCooldown: 1
-  thrusterForceAtPoint: 0
-  thrusterRelativeForce: 1200
+  thrusterForceAtPoint: 100
+  thrusterRelativeForce: 400
   jumperCooldown: 0
   usedDistance: 0
   retractAfter: 0
