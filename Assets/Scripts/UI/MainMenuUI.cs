@@ -64,7 +64,7 @@ namespace Scrapy.UI
         private void SetSfxVolume(float value)
         {
             OptionsManager.Instance.SfxVolume = value;
-            SfxManager.Instance.Play(sfxSoundOnSliderChange);
+            SfxManager.Instance.Play(sfxSoundOnSliderChange, 0.1f);
         }
 
         private void SetMusicVolume(float value)

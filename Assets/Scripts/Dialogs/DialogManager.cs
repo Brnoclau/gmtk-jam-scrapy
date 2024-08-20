@@ -69,12 +69,12 @@ namespace Scrapy
 
         public void NextLine(bool force = false)
         {
-            if (!force && _lastNextLineTime + nextLineInputDelay > Time.time)
+            if (!force && _lastNextLineTime + nextLineInputDelay > Time.unscaledTime)
             {
                 return;
             }
 
-            _lastNextLineTime = Time.time;
+            _lastNextLineTime = Time.unscaledTime;
             
             if (_currentLineIndex + 1 < CurrentDialog.dialogLines.Count)
             {

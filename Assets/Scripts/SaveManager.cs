@@ -11,6 +11,8 @@ namespace Scrapy
 
         public SaveFile CurrentSave { get; set; }
 
+        private const string SaveKey = "game_save";
+
         void Awake()
         {
             if (Instance != null)
@@ -27,10 +29,9 @@ namespace Scrapy
 
         public void ResetSave()
         {
-            var savePath = GetSavePath();
-            if (File.Exists(savePath))
+            if (PlayerPrefs.HasKey(SaveKey))
             {
-                File.Delete(savePath);
+                PlayerPrefs.DeleteKey(SaveKey);
             }
         }
 
@@ -57,11 +58,12 @@ namespace Scrapy
 
             var json = JsonUtility.ToJson(CurrentSave, true);
             Debug.Log("Save file json: \n" + json);
-            var savePath = GetSavePath();
-            Debug.Log("Save path: " + savePath);
+            // var savePath = GetSavePath();
+            // Debug.Log("Save path: " + savePath);
             try
             {
-                File.WriteAllText(savePath, json);
+                PlayerPrefs.SetString(SaveKey, json);
+                // File.WriteAllText(savePath, json);
             }
             catch (Exception e)
             {
@@ -74,21 +76,23 @@ namespace Scrapy
 
         public bool SaveFileExists()
         {
-            var savePath = GetSavePath();
-            return File.Exists(savePath);
+            // var savePath = GetSavePath();
+            // return File.Exists(savePath);
+            return PlayerPrefs.HasKey(SaveKey);
         }
 
         public SaveFile LoadGame()
         {
-            var savePath = GetSavePath();
-            if (!File.Exists(savePath))
+            // var savePath = GetSavePath();
+            if (!PlayerPrefs.HasKey(SaveKey))
             {
                 Debug.Log("No save file, using default save");
                 CurrentSave = SaveFile.Default();
                 return CurrentSave;
             }
 
-            var saveJson = File.ReadAllText(savePath);
+            // var saveJson = File.ReadAllText(savePath);
+            var saveJson = PlayerPrefs.GetString(SaveKey);
             try
             {
                 CurrentSave = JsonUtility.FromJson<SaveFile>(saveJson);
@@ -102,9 +106,9 @@ namespace Scrapy
             return CurrentSave;
         }
 
-        private string GetSavePath()
-        {
-            return Application.persistentDataPath + "/save.json";
-        }
+        // private string GetSavePath()
+        // {
+        //     return Application.persistentDataPath + "/save.json";
+        // }
     }
 }

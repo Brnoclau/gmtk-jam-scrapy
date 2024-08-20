@@ -39,12 +39,12 @@ namespace Scrapy.Player
             // return attachmentPointCount > minRequiredAttachedPoints && attachmentPointCount < maxRequiredAttachedPoints;
             if (attachmentPointCount < minRequiredAttachedPoints)
             {
-                return new CanAttachResult { Error = "Too few contact points" };
+                return new CanAttachResult { Error = "Component is too far" };
             }
 
             if (attachmentPointCount > maxRequiredAttachedPoints)
             {
-                return new CanAttachResult { Error = "Too many contact points" };
+                return new CanAttachResult { Error = "Component is too close" };
             }
 
             BodyPlayerComponent parent = null;

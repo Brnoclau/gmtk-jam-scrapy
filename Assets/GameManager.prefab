@@ -273,9 +273,13 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   creditsUI: {fileID: 0}
+  respawnFade: {fileID: 0}
   playingCameraZoom: 6.5
+  playingCameraOffset: {x: 0, y: 0.2}
   workshopCameraZoom: 3.5
+  workshopCameraOffset: {x: 0, y: 0}
   dialogCameraZoom: 3
+  dialogCameraOffset: {x: 0, y: 0}
   changeZoomTime: 1
   changeZoomEase: 6
 --- !u!1 &8250582789845848747

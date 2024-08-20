@@ -9,6 +9,7 @@ namespace Scrapy
 {
     public class UIController : MonoBehaviour
     {
+        [SerializeField] private FadeCanvas nonPauseUI;
         [SerializeField] private WorkshopUI workshopUI;
         [SerializeField] private FadeCanvas gameplayUI;
         [SerializeField] private FadeCanvas pauseUI;
@@ -21,6 +22,10 @@ namespace Scrapy
         [SerializeField] private Button toMainMenuButton;
         [SerializeField] private Button exitGameButton;
         [SerializeField] private string mainMenuSceneName;
+        
+        [SerializeField] private Slider sfxSlider;
+        [SerializeField] private Slider musicSlider;
+        [SerializeField] private AudioClip sfxSoundOnSliderChange;
 
         private void Awake()
         {
@@ -44,6 +49,16 @@ namespace Scrapy
             {
                 exitGameButton.gameObject.SetActive(false);
             }
+            
+            sfxSlider.onValueChanged.AddListener(SetSfxVolume);   
+            musicSlider.onValueChanged.AddListener(SetMusicVolume);   
+        }
+
+        private void Start()
+        {
+            sfxSlider.SetValueWithoutNotify(OptionsManager.Instance.SfxVolume);
+            musicSlider.SetValueWithoutNotify(OptionsManager.Instance.MusicVolume);
+            nonPauseUI.SetOpen(true, true);
         }
 
         private void Update()
@@ -68,6 +83,7 @@ namespace Scrapy
         void OnPausedChanged(bool isGamePaused)
         {
             pauseUI.SetOpen(isGamePaused);
+            nonPauseUI.SetOpen(!isGamePaused);
         }
 
         void OnStateChanged(GameState oldState, GameState newState)
@@ -95,5 +111,16 @@ namespace Scrapy
         // {
         //     toWorkshopButton.gameObject.SetActive(false);
         // }
+
+        private void SetSfxVolume(float value)
+        {
+            OptionsManager.Instance.SfxVolume = value;
+            SfxManager.Instance.Play(sfxSoundOnSliderChange, 0.1f);
+        }
+
+        private void SetMusicVolume(float value)
+        {
+            OptionsManager.Instance.MusicVolume = value;
+        }
     }
 }

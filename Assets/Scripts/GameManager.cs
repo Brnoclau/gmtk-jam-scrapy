@@ -6,6 +6,7 @@ using DG.Tweening;
 using JetBrains.Annotations;
 using Scrapy.Player;
 using Scrapy.UI;
+using Scrapy.Util;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -27,11 +28,17 @@ namespace Scrapy
 
         [Header("Camera settings")] [SerializeField]
         private float playingCameraZoom = 6;
+        [SerializeField] private Vector2 playingCameraOffset;
 
         [SerializeField] private float workshopCameraZoom = 4;
+        [SerializeField] private Vector2 workshopCameraOffset;
         [SerializeField] private float dialogCameraZoom = 4;
+        [SerializeField] private Vector2 dialogCameraOffset;
         [SerializeField] private float changeZoomTime = 1;
         [SerializeField] private Ease changeZoomEase = Ease.OutQuad;
+        
+        public Transform BottomLeft => levelBottomLeft;
+        public Transform TopRight => levelTopRight;
 
         public static GameManager Instance { get; private set; }
 
@@ -49,7 +56,18 @@ namespace Scrapy
             {
                 _isGamePaused = value;
                 GamePausedChanged?.Invoke(value);
-                Time.timeScale = _isGamePaused ? 0 : 1;
+                if (_isGamePaused)
+                {
+                    Time.timeScale = 0;
+                    this.DOKill();
+                }
+                else
+                {
+                    if (State != GameState.Dialog)
+                    {
+                        Time.timeScale = 1;
+                    }   
+                }
             }
         }
 
@@ -228,17 +246,33 @@ namespace Scrapy
                 creditsUI.ShowCredits();
             }
 
+            if (newState == GameState.Dialog)
+            {
+                // dotween timescale
+                DOTween.To(() => Time.timeScale, value => Time.timeScale = value, 0, 0.5f)
+                    .SetUpdate(true).SetTarget(this);
+            }
+            else if (_state == GameState.Dialog)
+            {
+                DOTween.To(() => Time.timeScale, value => Time.timeScale = value, 1, 0.5f)
+                    .SetUpdate(true).SetTarget(this);
+            }
+
             float newZoom = playingCameraZoom;
+            Vector2 newOffset = playingCameraOffset;
             switch (newState)
             {
                 case GameState.Playing:
                     newZoom = playingCameraZoom;
+                    newOffset = playingCameraOffset;
                     break;
                 case GameState.Workshop:
                     newZoom = workshopCameraZoom;
+                    newOffset = workshopCameraOffset;
                     break;
                 case GameState.Dialog:
                     newZoom = dialogCameraZoom;
+                    newOffset = dialogCameraOffset;
                     break;
             }
 
@@ -247,6 +281,11 @@ namespace Scrapy
                 () => cinemachineCamera.Lens.OrthographicSize,
                 value => cinemachineCamera.Lens.OrthographicSize = value,
                 newZoom, changeZoomTime).SetEase(changeZoomEase).SetTarget(cinemachineCamera);
+            var positionComposer = cinemachineCamera.GetComponent<CinemachinePositionComposer>();
+            positionComposer.DOKill();
+            DOTween.To(
+                () => positionComposer.Composition.ScreenPosition, value => positionComposer.Composition.ScreenPosition = value,
+                newOffset, changeZoomTime).SetEase(changeZoomEase).SetTarget(positionComposer);
 
             var oldValue = _state;
             _state = newState;
