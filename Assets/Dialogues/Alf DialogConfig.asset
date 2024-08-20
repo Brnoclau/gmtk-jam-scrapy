@@ -15,5 +15,18 @@ MonoBehaviour:
   participants: []
   dialogLines:
   - participant: 0
-    text: Sup.
+    text: Howdy.
+  - participant: 0
+    text: Ol' Papa finally sent someone to check up on me!
+  - participant: 0
+    text: You tell him I'm doing just fine. After all this time, I adapted.
+  - participant: 0
+    text: Got myself a hat. You like it?
+  - participant: 0
+    text: 'Me too. As I said: I''m just fine. Have a good one!'
+  - participant: 0
+    text: Oh, one more thing.
+  - participant: 0
+    text: . If you're looking for mail, the only place they get it to is high up
+      there. By the moon-shaped island.
   checkpointOnFinish: quest-alf

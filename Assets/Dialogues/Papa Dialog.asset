@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca8072acfc8247608624f17d002162ba, type: 3}
+  m_Name: Papa Dialog
+  m_EditorClassIdentifier: 
+  participants:
+  - name: Scrappy
+  dialogLines:
+  - participant: 0
+    text: Hm, boot time a bit longer...
+  - participant: 0
+    text: Interesting... Oh, right.
+  - participant: 0
+    text: Hi, Scrapy!
+  - participant: 0
+    text: I'm not sure if you saved what I said into the memory, so I'll repeat once
+      again.
+  - participant: 0
+    text: I need you to perform a couple of tests.
+  - participant: 0
+    text: They may look like errands, true. But who said they can't be both?
+  - participant: 0
+    text: You have a list of tasks to complete around these parts.
+  - participant: 0
+    text: Once you are done, come back to me.
+  - participant: 0
+    text: Feel free to grab any scrap lying around, I've seen some just behing the
+      workshop.
+  - participant: 0
+    text: Use it to modify your structure. With a couple of wheels, you can scale
+      any mountain! Probably...
+  - participant: 0
+    text: Use it to modify your structure. With a couple of wheels, you can scale
+      any mountain! Probably...
+  checkpointOnFinish: quest-papa
