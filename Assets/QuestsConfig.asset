@@ -15,19 +15,73 @@ MonoBehaviour:
   quests:
   - checkpointKey: collect-first-components
     activeWhenCheckpointsComplete: []
-    name: First components
-    description: Collect your first components
+    name: First Components!
+    description: Collect your first components to use in a Workshop!
     playCompleteQuestAnimation: 1
-  - checkpointKey: quest-toilet-paper
+  - checkpointKey: find-tub
+    activeWhenCheckpointsComplete: []
+    name: 'Fixing Bathroom: Find the Bathtub'
+    description: Find the lost Bathtub!
+    playCompleteQuestAnimation: 1
+  - checkpointKey: find-paper
+    activeWhenCheckpointsComplete:
+    - 
+    name: 'Fixing Bathroom: Find Toilet Paper'
+    description: Find the lost Toilet Paper roll.
+    playCompleteQuestAnimation: 1
+  - checkpointKey: find-seat
+    activeWhenCheckpointsComplete:
+    - 
+    name: 'Fixing Bathroom: Find Toilet Seat'
+    description: Find the lost Toilet Seat.
+    playCompleteQuestAnimation: 1
+  - checkpointKey: quest-alf
+    activeWhenCheckpointsComplete:
+    - 
+    name: Hello to an Old Friend
+    description: Check up on my friend Alf.
+    playCompleteQuestAnimation: 1
+  - checkpointKey: quest-flip
+    activeWhenCheckpointsComplete:
+    - 
+    name: Do a Flip!
+    description: Do a cool flip. To test some inner systems.
+    playCompleteQuestAnimation: 1
+  - checkpointKey: find-extinguisher
+    activeWhenCheckpointsComplete:
+    - 
+    name: Find Fire Extinguisher
+    description: Find the Fire Extinguisher. You might need it.
+    playCompleteQuestAnimation: 1
+  - checkpointKey: find-mail
+    activeWhenCheckpointsComplete:
+    - 
+    name: Get Mail
+    description: Collect fresh Mail from the postbox.
+    playCompleteQuestAnimation: 1
+  - checkpointKey: find-pogo
     activeWhenCheckpointsComplete:
     - collect-first-components
-    name: Toilet Paper
-    description: Find and collect the toilet paper
+    - find-tub
+    - find-paper
+    - find-seat
+    - find-mail
+    - find-extinguisher
+    - quest-alf
+    - quest-flip
+    name: Find Pogo Stick
+    description: Find a personal jumping evice. A "Pogo Stick".
     playCompleteQuestAnimation: 1
-  - checkpointKey: inspect-tv
+  - checkpointKey: quest-end
     activeWhenCheckpointsComplete:
-    - ALWAYS_HIDDEN
-    name: Inspect a TV
-    description: Find a TV and inspect it
+    - find-pogo
+    - find-mail
+    - find-extinguisher
+    - quest-alf
+    - find-seat
+    - find-paper
+    - find-tub
+    name: Return to Papa
+    description: Now you can return to your Maker.
     playCompleteQuestAnimation: 1
-  showCreditsAfterCheckpointKey: quest-toilet-paper
+  showCreditsAfterCheckpointKey: quest-end

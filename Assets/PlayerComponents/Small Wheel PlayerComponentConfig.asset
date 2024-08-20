@@ -61,7 +61,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  breakTorque: 200
+  breakTorque: 310
   actionMode: 0
   usesCharge: 0
   chargeSec: 0
