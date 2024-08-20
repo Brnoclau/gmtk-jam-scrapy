@@ -2325,7 +2325,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 840668875}
-  - component: {fileID: 840668874}
+  - component: {fileID: 840668876}
   - component: {fileID: 840668873}
   m_Layer: 0
   m_Name: Wooden Plank Dialog
@@ -2370,20 +2370,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.59
---- !u!114 &840668874
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 840668872}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70d24db7f16e830478c0748628684bb3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactText: Inspect
-  dialogConfig: {fileID: 11400000, guid: 20829c29721ab8b419af9e21763f27a6, type: 2}
 --- !u!4 &840668875
 Transform:
   m_ObjectHideFlags: 0
@@ -2400,6 +2386,27 @@ Transform:
   - {fileID: 595565962}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &840668876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 840668872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 953dfbb5ad1d4cae83fc1c533bfac82d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactText: Inspect
+  defaultDialogConfig: {fileID: 11400000, guid: 20829c29721ab8b419af9e21763f27a6, type: 2}
+  options:
+  - requiredCheckpoints:
+    - talk-to-plank
+    dialogConfig: {fileID: 11400000, guid: 14d99ab5571074e44b8d58486e2a2d5f, type: 2}
+  - requiredCheckpoints:
+    - inspect-tv
+    dialogConfig: {fileID: 11400000, guid: 5b0a1cf76cc93d5409c36ee6eee632a2, type: 2}
 --- !u!1 &894490544
 GameObject:
   m_ObjectHideFlags: 0

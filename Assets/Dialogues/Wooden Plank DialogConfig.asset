@@ -16,3 +16,4 @@ MonoBehaviour:
   dialogLines:
   - participant: 0
     text: Just a wooden plank.
+  checkpointOnFinish: talk-to-plank
