@@ -19,8 +19,8 @@ namespace Scrapy.UI
         {
             if (GameManager.Instance.Player == null) return;
             var playerPos = GameManager.Instance.Player.transform.position;
-            var mapBottomLeft = GameManager.Instance.BottomLeft.position;
-            var mapTopRight = GameManager.Instance.TopRight.position;
+            var mapBottomLeft = GameManager.Instance.MapBottomLeft.position;
+            var mapTopRight = GameManager.Instance.MapTopRight.position;
             var mapSize = mapTopRight - mapBottomLeft;
             var playerPosNormalized = new Vector2(
                 Mathf.Clamp01((playerPos.x - mapBottomLeft.x) / mapSize.x),

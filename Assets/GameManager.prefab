@@ -31,6 +31,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8307905129169121417}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3665301804951031592
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3061883700348054060}
+  m_Layer: 0
+  m_Name: MapBottomLeft
+  m_TagString: Untagged
+  m_Icon: {fileID: 8418204508859773708, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3061883700348054060
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3665301804951031592}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -33.600006, y: -13.2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8307905129169121417}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5392338911215404953
 GameObject:
   m_ObjectHideFlags: 0
@@ -212,6 +243,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   questsConfig: {fileID: 11400000, guid: 959d1150d7f4e724eb103798d8780315, type: 2}
+--- !u!1 &7091005794047069785
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7757997278121749176}
+  m_Layer: 0
+  m_Name: MapTopRight
+  m_TagString: Untagged
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7757997278121749176
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7091005794047069785}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 151.1, y: 7.3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8307905129169121417}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7452486348141224475
 GameObject:
   m_ObjectHideFlags: 0
@@ -245,6 +307,8 @@ Transform:
   - {fileID: 4316921087198417057}
   - {fileID: 7727082282537748091}
   - {fileID: 4786035361133690021}
+  - {fileID: 3061883700348054060}
+  - {fileID: 7757997278121749176}
   - {fileID: 7367586237848622355}
   - {fileID: 1815986320226354435}
   - {fileID: 5173758837648300754}
@@ -267,6 +331,8 @@ MonoBehaviour:
   playerPrefab: {fileID: 5165385293506016725, guid: ba84ffbd1439e5a4c9e84ed5a884de52, type: 3}
   levelBottomLeft: {fileID: 7727082282537748091}
   levelTopRight: {fileID: 4786035361133690021}
+  mapBottomLeft: {fileID: 3061883700348054060}
+  mapTopRight: {fileID: 7757997278121749176}
   workshopController: {fileID: 1031209344426321712}
   cinemachineCamera: {fileID: 0}
   workshopAreas:

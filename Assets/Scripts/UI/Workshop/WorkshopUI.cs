@@ -25,7 +25,6 @@ namespace Scrapy.UI.Workshop
         [SerializeField] private RectTransform hotkeyContainer;
         [SerializeField] private TMP_Dropdown hotkeyDropdown;
 
-        private Canvas _canvas;
         private WorkshopController _workshopController;
         private readonly List<ComponentUI> _componentUIs = new();
 
@@ -34,7 +33,6 @@ namespace Scrapy.UI.Workshop
         protected override void Awake()
         {
             base.Awake();
-            _canvas = GetComponent<Canvas>();
             _workshopController = GameManager.Instance.WorkshopController;
             _workshopController.ActiveChanged += OnActiveChanged;
             _workshopController.AddingComponentChanged += OnNewComponentAdding;

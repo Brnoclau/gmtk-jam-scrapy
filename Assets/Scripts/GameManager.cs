@@ -20,6 +20,8 @@ namespace Scrapy
         [SerializeField] private Player.Player playerPrefab;
         [SerializeField] private Transform levelBottomLeft;
         [SerializeField] private Transform levelTopRight;
+        [SerializeField] private Transform mapBottomLeft;
+        [SerializeField] private Transform mapTopRight;
         [SerializeField] private WorkshopController workshopController;
         [SerializeField] private CinemachineCamera cinemachineCamera;
         [SerializeField] private List<WorkshopArea> workshopAreas;
@@ -37,8 +39,8 @@ namespace Scrapy
         [SerializeField] private float changeZoomTime = 1;
         [SerializeField] private Ease changeZoomEase = Ease.OutQuad;
         
-        public Transform BottomLeft => levelBottomLeft;
-        public Transform TopRight => levelTopRight;
+        public Transform MapBottomLeft => mapBottomLeft;
+        public Transform MapTopRight => mapTopRight;
 
         public static GameManager Instance { get; private set; }
 

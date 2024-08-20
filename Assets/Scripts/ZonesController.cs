@@ -46,7 +46,7 @@ namespace Scrapy
             if (oldState == GameState.Credits) audioSource.DOFade(1, .3f).SetUpdate(true);
         }
 
-        private void Update()
+        private void LateUpdate()
         {
             if (_currentZone == null) return;
             foreach (var entry in _currentZone.parallaxEntries)
