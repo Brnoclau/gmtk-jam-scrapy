@@ -1,9 +1,11 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using JetBrains.Annotations;
 using Scrapy.Player;
+using Scrapy.UI;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -21,6 +23,7 @@ namespace Scrapy
         [SerializeField] private CinemachineCamera cinemachineCamera;
         [SerializeField] private List<WorkshopArea> workshopAreas;
         [SerializeField] private CreditsUI creditsUI;
+        [SerializeField] private FadeCanvas respawnFade;
 
         [Header("Camera settings")] [SerializeField]
         private float playingCameraZoom = 6;
@@ -92,6 +95,7 @@ namespace Scrapy
         }
 
         private bool _playerIsInWorkshop = false;
+        private bool _isRespawning = false;
 
         public WorkshopArea CurrentWorkshopArea
         {
@@ -128,6 +132,7 @@ namespace Scrapy
         {
             LoadGame();
             RespawnPlayer();
+            cinemachineCamera.ForceCameraPosition(_player.transform.position, Quaternion.identity);
             SetState(GameState.Playing);
             IsGamePaused = false;
         }
@@ -147,7 +152,7 @@ namespace Scrapy
                     _player.transform.position.y > levelTopRight.position.y ||
                     _player.transform.position.x > levelTopRight.position.x)
                 {
-                    RespawnPlayer();
+                    RespawnWithFade();
                     SfxManager.Instance.Play(GlobalConfig.Instance.audio.exitWorkshopOrRespawn, 0.1f);
                 }
             }
@@ -244,6 +249,27 @@ namespace Scrapy
             var oldValue = _state;
             _state = newState;
             StateChanged?.Invoke(oldValue, _state);
+        }
+
+        void RespawnWithFade()
+        {
+            if (_isRespawning)
+            {
+                return;
+            }
+
+            StartCoroutine(RespawnWithFadeCoroutine());
+        }
+
+        IEnumerator RespawnWithFadeCoroutine()
+        {
+            _isRespawning = true;
+            respawnFade.SetOpen(true);
+            yield return new WaitForSeconds(respawnFade.OpenFadeDuration);
+            RespawnPlayer();
+            cinemachineCamera.ForceCameraPosition(_player.transform.position, Quaternion.identity);
+            respawnFade.SetOpen(false);
+            _isRespawning = false;
         }
 
         void RespawnPlayer()

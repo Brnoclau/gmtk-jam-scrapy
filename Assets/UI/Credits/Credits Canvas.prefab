@@ -905,7 +905,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Valza Sheholli aka. tincan
+  m_text: Valza "tincan" Sheholli
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cdac1f54fe1eef14bb764b1d7476934b, type: 2}
   m_sharedMaterial: {fileID: 2037179972281628286, guid: cdac1f54fe1eef14bb764b1d7476934b, type: 2}
