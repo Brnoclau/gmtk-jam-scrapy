@@ -37089,7 +37089,6 @@ MonoBehaviour:
     - find-pogo
     - quest-alf
     - find-mail
-    - quest-flip
     dialogConfig: {fileID: 11400000, guid: 8c7ae73c4b01dba46bbd3d80965cfeb3, type: 2}
 --- !u!61 &1391356926
 BoxCollider2D:

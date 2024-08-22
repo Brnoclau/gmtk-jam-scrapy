@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Papa Dialog
   m_EditorClassIdentifier: 
   participants:
-  - name: Scrappy
+  - name: Papa
   dialogLines:
   - participant: 0
     text: Hm, boot time a bit longer...
